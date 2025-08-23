@@ -1,11 +1,7 @@
 import os
 from dotenv import load_dotenv
 from app import app as application, init_db, start_scheduler
-
-# Load environment variables from .env if present
 load_dotenv()
-
-# Ensure DB is initialized when the WSGI app is imported
 try:
     init_db()
     # Start scheduler in WSGI context once

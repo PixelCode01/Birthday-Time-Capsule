@@ -185,8 +185,22 @@ def init_db():
             conn.execute('ALTER TABLE capsules ADD COLUMN owner_email TEXT')
         except Exception:
             pass
+        # Backfill older DBs with theme and privacy_level columns if missing
+        try:
+            conn.execute("ALTER TABLE capsules ADD COLUMN theme TEXT DEFAULT 'default'")
+        except Exception:
+            pass
+        try:
+            conn.execute("ALTER TABLE capsules ADD COLUMN privacy_level TEXT DEFAULT 'friends'")
+        except Exception:
+            pass
         try:
             conn.execute('ALTER TABLE contributions ADD COLUMN contributor_email TEXT')
+        except Exception:
+            pass
+        # Backfill missing contribution_type for older DBs
+        try:
+            conn.execute("ALTER TABLE contributions ADD COLUMN contribution_type TEXT DEFAULT 'message'")
         except Exception:
             pass
         # Add reminder_sent_at to invites if missing
@@ -759,8 +773,8 @@ def contribute(capsule_id):
         except Exception as e:
             app.logger.info('Notification emails skipped: %s', e)
         
-    flash('Your contribution has been added to the time capsule.', 'success')
-    return redirect(url_for('capsule_details', capsule_id=capsule_id))
+        flash('Your contribution has been added to the time capsule.', 'success')
+        return redirect(url_for('capsule_details', capsule_id=capsule_id))
     
     return render_template('contribute.html', capsule=capsule)
 
