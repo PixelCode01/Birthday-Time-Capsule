@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>{% block title %}Birthday Time Capsule{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Base palette (light) */
+            --color-bg: #f7f7fb;
+            --color-surface: #ffffff;
+            --color-surface-2: #f3f4f6;
+            --color-text: #111827;
+            --color-muted: #6b7280;
+            --color-border: #e5e7eb;
+
+            --color-primary: #6366f1; /* indigo-500 */
+            --color-primary-600: #4f46e5;
+            --color-primary-700: #4338ca;
+            --color-primary-contrast: #ffffff;
+
+            --color-accent: #14b8a6; /* teal-500 */
+            --color-success: #22c55e;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 24px rgba(0,0,0,0.12);
+        }
+
+        /* Dark theme overrides */
+        [data-theme="dark"] {
+            --color-bg: #0f172a; /* slate-900 */
+            --color-surface: #111827; /* gray-900 */
+            --color-surface-2: #1f2937; /* gray-800 */
+            --color-text: #e5e7eb; /* gray-200 */
+            --color-muted: #9ca3af; /* gray-400 */
+            --color-border: #334155; /* slate-700 */
+
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+            --shadow-md: 0 6px 16px rgba(0,0,0,0.45);
+            --shadow-lg: 0 14px 32px rgba(0,0,0,0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .glass-morphism {
+            background: var(--color-surface-2);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+        }
+        
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Skip link for keyboard users */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            left: 16px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            background: var(--color-surface);
+            color: var(--color-text);
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            z-index: 1100;
+        }
+        
+        .card {
+            background: var(--color-surface) !important; /* override any inline gradients */
+            color: var(--color-text) !important;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+        
+        .card-header {
+            background: linear-gradient(180deg, var(--color-surface), var(--color-surface-2)) !important;
+            color: var(--color-text) !important;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+            text-align: center;
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--color-border) !important;
+        }
+        
+        .card-header h1, .card-header h2 {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 30px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-primary-contrast);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: var(--color-primary-600);
+            color: var(--color-primary-contrast);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-success {
+            background: var(--color-success);
+            color: var(--color-primary-contrast);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--color-warning);
+            color: #3b2c02;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+            color: #333;
+        }
+        
+        .form-control, .form-select {
+            background: var(--color-surface);
+            color: var(--color-text);
+            border: 1.5px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+        .form-control::placeholder {
+            color: var(--color-muted);
+            opacity: 1;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+            outline: none;
+        }
+        
+        .navbar {
+            background: var(--color-surface) !important;
+            border-bottom: 1px solid var(--color-border);
+        }
+        /* Ensure navbar text/icons are readable in both themes */
+        .navbar .navbar-brand,
+        .navbar .nav-link {
+            color: var(--color-text) !important;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus {
+            color: var(--color-primary) !important;
+        }
+        .navbar .navbar-toggler {
+            border-color: var(--color-border);
+        }
+        /* Default (light) toggler icon */
+        .navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        /* Dark theme toggler icon for contrast */
+        [data-theme="dark"] .navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(229, 231, 235, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        
+        .alert {
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            background: var(--color-surface-2);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        .alert-success { border-left: 4px solid var(--color-success); }
+        .alert-error, .alert-danger { border-left: 4px solid var(--color-danger); }
+        .alert-warning { border-left: 4px solid var(--color-warning); }
+        .alert-info { border-left: 4px solid var(--color-primary); }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: firework 2s ease-out infinite;
+        }
+        
+        @keyframes firework {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        .confetti {
+            position: fixed;
+            top: -10px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            animation: confetti 4s ease-in-out infinite;
+        }
+        
+        @keyframes confetti {
+            0% {
+                transform: translate(-50%, 0) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, 120vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .ascii-art {
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            background: var(--color-surface-2);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--color-primary);
+            line-height: 1.2;
+        }
+        
+        .message-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .message-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .unlock-animation {
+            animation: unlock 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes unlock {
+            0% {
+                transform: scale(0.8) rotateY(180deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05) rotateY(90deg);
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .floating-icons {
+            display: none; /* tamed by default for cleaner UI */
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        .countdown-timer {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: var(--color-surface);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            min-width: 80px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+    .countdown-number { font-size: 2rem; font-weight: 700; color: var(--color-primary); display: block; }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card-header {
+                padding: 20px 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+                padding: 10px;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+        }
+        
+    .progress-bar-container { background: var(--color-surface-2); border-radius: 10px; height: 8px; overflow: hidden; margin: 10px 0; }
+    .progress-bar { height: 100%; background: var(--color-primary); border-radius: 10px; transition: width 0.3s ease; }
+
+    /* Themed links and muted text */
+    .text-muted { color: var(--color-muted) !important; }
+    a { color: var(--color-primary); text-decoration: none; }
+    a:hover, a:focus { color: var(--color-primary-600); text-decoration: underline; }
+
+        /* Improve outline button contrast in dark theme */
+        .btn-outline-secondary {
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            background: transparent;
+        }
+        .btn-outline-secondary:hover,
+        .btn-outline-secondary:focus {
+            background: var(--color-surface-2);
+            color: var(--color-text);
+            border-color: var(--color-border);
+        }
+    /* Better icon visibility for close buttons in dark */
+    [data-theme="dark"] .btn-close { filter: invert(1) grayscale(100%); opacity: 0.9; }
+    [data-theme="dark"] .btn-close:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-birthday-cake me-2"></i>Birthday Time Capsule
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{{ url_for('find_capsule') }}">
+                        <i class="fas fa-search me-1"></i>Find Capsule
+                    </a>
+                    <a class="nav-link" href="{{ url_for('create_capsule') }}">
+                        <i class="fas fa-plus me-1"></i>Create New
+                    </a>
+                    <button class="btn btn-sm btn-outline-secondary ms-2" id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+                        <i class="fas fa-moon me-1" id="themeIcon"></i><span id="themeLabel">Dark</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="floating-icons" aria-hidden="true"></div>
+
+    <div id="main-content" class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme toggle with localStorage persistence
+        (function() {
+            const body = document.body;
+            const key = 'btc_theme';
+            const saved = localStorage.getItem(key);
+            if (saved === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+            } else if (saved === 'light') {
+                body.removeAttribute('data-theme');
+            } else {
+                // No saved preference: respect system preference
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) body.setAttribute('data-theme', 'dark');
+            }
+            const btn = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            function syncUI() {
+                const dark = body.getAttribute('data-theme') === 'dark';
+                if (icon) icon.className = dark ? 'fas fa-sun me-1' : 'fas fa-moon me-1';
+                if (label) label.textContent = dark ? 'Light' : 'Dark';
+                if (btn) btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+            }
+            syncUI();
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    const dark = body.getAttribute('data-theme') === 'dark';
+                    if (dark) {
+                        body.removeAttribute('data-theme');
+                        localStorage.setItem(key, 'light');
+                    } else {
+                        body.setAttribute('data-theme', 'dark');
+                        localStorage.setItem(key, 'dark');
+                    }
+                    syncUI();
+                });
+            }
+        })();
+
+        // Enhanced form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn && !submitBtn.disabled) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span class="loading-spinner me-2"></span>Processing...';
+                        
+                        setTimeout(() => {
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = submitBtn.dataset.originalText || 'Submit';
+                            }
+                        }, 5000);
+                    }
+                });
+                
+                // Store original button text
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.dataset.originalText = submitBtn.innerHTML;
+                }
+            });
+            
+            // Auto-dismiss alerts after 5 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    if (alert && alert.parentNode) {
+                        alert.classList.remove('show');
+                        setTimeout(() => {
+                            if (alert.parentNode) {
+                                alert.parentNode.removeChild(alert);
+                            }
+                        }, 150);
+                    }
+                }, 5000);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Copy to clipboard function
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+                button.classList.add('btn-success');
+                button.classList.remove('btn-outline-secondary');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-outline-secondary');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+        
+    // Enhanced animations (tamed)
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+            entry.target.style.animation = 'unlock 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.message-card, .card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Initialize animations when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', observeElements);
+        } else {
+            observeElements();
+        }
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

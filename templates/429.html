@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Too Many Requests{% endblock %}
+{% block content %}
+<div class="card mx-auto" style="max-width:720px;">
+  <div class="card-header">
+    <h2 class="mb-0"><i class="fas fa-gauge-high me-2"></i>Too Many Requests</h2>
+  </div>
+  <div class="card-body">
+  <p class="mb-3">You've hit the rate limit for this action. This helps keep the site fast and secure.</p>
+    <ul class="mb-3">
+      <li>Wait a short moment and try again.</li>
+  <li>If you're sharing the same network with others, someone else might be making requests too.</li>
+    </ul>
+    <a href="{{ url_for('index') }}" class="btn btn-primary"><i class="fas fa-home me-1"></i>Go Home</a>
+  </div>
+</div>
+{% endblock %}

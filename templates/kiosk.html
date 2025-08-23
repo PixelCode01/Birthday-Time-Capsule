@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Kiosk Mode - {{ capsule[1] }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header text-center">
+        <h2><i class="fas fa-bullhorn me-2"></i>Party Kiosk: {{ capsule[1] }}'s Capsule</h2>
+        <p class="mb-0">Quickly add birthday wishes during the event. After each submission, the form resets.</p>
+      </div>
+      <div class="card-body p-4">
+        {% if just_submitted %}
+        <div class="alert alert-success text-center"><i class="fas fa-check-circle me-1"></i>Thanks! Your message was saved. Next person can add theirs now.</div>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Your Name (optional)</label>
+              <input class="form-control" name="contributor_name" placeholder="Guest">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Add a quick photo (optional)</label>
+              <input class="form-control" type="file" name="image" accept="image/*">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Your Message</label>
+            <textarea class="form-control" name="message" rows="3" placeholder="Write a short birthday message..."></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ASCII Doodle (optional)</label>
+            <textarea class="form-control ascii-art" name="ascii_art" rows="4" placeholder="Quick doodle..."></textarea>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary btn-lg" type="submit"><i class="fas fa-gift me-1"></i>Save & Reset</button>
+            <a class="btn btn-outline-secondary ms-2" href="{{ url_for('capsule_details', capsule_id=capsule[0]) }}">Back</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

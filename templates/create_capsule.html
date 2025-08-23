@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}Create Time Capsule{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-magic me-2"></i>Create Your Birthday Time Capsule</h2>
+                <p class="mb-0">Design a magical birthday surprise for the future</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" id="createCapsuleForm">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">
+                                <i class="fas fa-user me-1"></i>Birthday Person's Name
+                            </label>
+                            <input type="text" class="form-control" id="name" name="name" required 
+                                   placeholder="Enter the birthday person's name">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="owner_email" class="form-label">
+                                <i class="fas fa-envelope me-1"></i>Owner Email (optional)
+                            </label>
+                            <input type="email" class="form-control" id="owner_email" name="owner_email" placeholder="you@example.com">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="birthdate" class="form-label">
+                                <i class="fas fa-calendar me-1"></i>Their Birthdate
+                            </label>
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="slug" class="form-label">
+                                <i class="fas fa-link me-1"></i>Custom Share Link (optional)
+                            </label>
+                            <input type="text" class="form-control" id="slug" name="slug" placeholder="e.g. alex-30th">
+                            <div class="form-text">
+                                People can visit /c/your-slug to find your capsule easily.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="unlock_date" class="form-label">
+                                <i class="fas fa-unlock me-1"></i>Milestone Birthday (Unlock Date)
+                            </label>
+                            <input type="date" class="form-control" id="unlock_date" name="unlock_date" required>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>Choose a future milestone birthday (25th, 30th, 40th, etc.)
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="theme" class="form-label">
+                                <i class="fas fa-palette me-1"></i>Capsule Theme
+                            </label>
+                            <select class="form-select" id="theme" name="theme">
+                                <option value="default">Classic Birthday</option>
+                                <option value="sparkle">Sparkle & Shine</option>
+                                <option value="rainbow">Rainbow Dreams</option>
+                                <option value="elegant">Elegant Gold</option>
+                                <option value="fun">Fun & Colorful</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="passphrase" class="form-label">
+                            <i class="fas fa-key me-1"></i>Secret Passphrase
+                        </label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="passphrase" name="passphrase" required 
+                                   placeholder="Create a memorable passphrase">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passphrase')">
+                                <i class="fas fa-eye" id="passphrase-icon"></i>
+                            </button>
+                        </div>
+                        <div class="form-text">
+                            <i class="fas fa-shield-alt me-1"></i>This will be needed to unlock the capsule on the reveal date
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="passphrase_hint" class="form-label">
+                            <i class="fas fa-lightbulb me-1"></i>Passphrase Hint (optional)
+                        </label>
+                        <input type="text" class="form-control" id="passphrase_hint" name="passphrase_hint" placeholder="A clue you'll understand later (not the passphrase)">
+                        <div class="form-text">
+                            This hint may be shown on unlock day to help you remember.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="privacy_level" class="form-label">
+                            <i class="fas fa-users me-1"></i>Who Can Contribute?
+                        </label>
+                        <select class="form-select" id="privacy_level" name="privacy_level">
+                            <option value="friends">Friends and family (anyone with capsule ID)</option>
+                            <option value="private">Private (PIN required to contribute)</option>
+                        </select>
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="owner_pin" class="form-label"><i class="fas fa-user-shield me-1"></i>Owner PIN (optional)</label>
+                                <input type="password" class="form-control" id="owner_pin" name="owner_pin" placeholder="For owner actions (invites)">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="access_pin" class="form-label"><i class="fas fa-key me-1"></i>Access PIN (optional)</label>
+                                <input type="password" class="form-control" id="access_pin" name="access_pin" placeholder="Ask contributors for this PIN">
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            Set an owner PIN to manage invites; set an access PIN to restrict who can contribute.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="future_letter" class="form-label">
+                            <i class="fas fa-envelope me-1"></i>Letter to Future Self
+                        </label>
+                        <textarea class="form-control" id="future_letter" name="future_letter" rows="5" 
+                                  placeholder="Write a heartfelt message to yourself that will be revealed when the capsule opens...&#10;&#10;What are your dreams today? What do you hope to achieve by then? What would you like to remember about this moment?"></textarea>
+                        <div class="form-text">
+                            <i class="fas fa-heart me-1"></i>This special message will be the first thing you see when the capsule opens
+                        </div>
+                    </div>
+                    
+                    <div class="milestone-preview mb-4" id="milestonePreview" style="display: none;">
+                        <div class="glass-morphism p-3 text-white text-center">
+                            <h5><i class="fas fa-birthday-cake me-2"></i>Milestone Preview</h5>
+                            <p class="mb-1">This capsule will unlock on your <strong id="milestoneAge"></strong> birthday!</p>
+                            <p class="mb-0 small" id="timeUntilUnlock"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="fas fa-rocket me-2"></i>Create Time Capsule
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Tips Section -->
+                <div class="mt-5 p-4" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border-radius: 15px;">
+                    <h5><i class="fas fa-lightbulb me-2"></i>Tips for a Great Time Capsule</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Choose a meaningful milestone birthday</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Write from the heart in your future letter</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Share the ID with close friends and family</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use a passphrase you'll remember</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Consider what themes you'll love in the future</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Remember to mark your calendar!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const birthdateInput = document.getElementById('birthdate');
+    const unlockDateInput = document.getElementById('unlock_date');
+    const milestonePreview = document.getElementById('milestonePreview');
+    const milestoneAge = document.getElementById('milestoneAge');
+    const timeUntilUnlock = document.getElementById('timeUntilUnlock');
+    
+    function updateMilestonePreview() {
+        const birthdate = new Date(birthdateInput.value);
+        const unlockDate = new Date(unlockDateInput.value);
+        
+        if (birthdateInput.value && unlockDateInput.value) {
+            const age = unlockDate.getFullYear() - birthdate.getFullYear();
+            const today = new Date();
+            const timeDiff = unlockDate - today;
+            const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            if (daysDiff > 0) {
+                milestoneAge.textContent = age + getSuffix(age);
+                
+                const years = Math.floor(daysDiff / 365);
+                const months = Math.floor((daysDiff % 365) / 30);
+                const days = daysDiff % 30;
+                
+                let timeText = '';
+                if (years > 0) timeText += years + ' year' + (years !== 1 ? 's' : '') + ', ';
+                if (months > 0) timeText += months + ' month' + (months !== 1 ? 's' : '') + ', ';
+                timeText += days + ' day' + (days !== 1 ? 's' : '');
+                
+                timeUntilUnlock.textContent = `That's in ${timeText}!`;
+                milestonePreview.style.display = 'block';
+            } else {
+                milestonePreview.style.display = 'none';
+            }
+        } else {
+            milestonePreview.style.display = 'none';
+        }
+    }
+    
+    function getSuffix(age) {
+        if (age % 100 >= 11 && age % 100 <= 13) return 'th';
+        switch (age % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+    
+    birthdateInput.addEventListener('change', function() {
+        const birthdate = new Date(this.value);
+        const currentYear = new Date().getFullYear();
+        const birthYear = birthdate.getFullYear();
+        const currentAge = currentYear - birthYear;
+        
+        // Suggest next milestone birthday
+        let nextMilestone = 25;
+        if (currentAge >= 25) nextMilestone = 30;
+        if (currentAge >= 30) nextMilestone = 40;
+        if (currentAge >= 40) nextMilestone = 50;
+        if (currentAge >= 50) nextMilestone = 60;
+        
+        const milestoneYear = birthYear + nextMilestone;
+        const milestoneDate = new Date(milestoneYear, birthdate.getMonth(), birthdate.getDate());
+        
+        unlockDateInput.value = milestoneDate.toISOString().split('T')[0];
+        updateMilestonePreview();
+    });
+    
+    unlockDateInput.addEventListener('change', updateMilestonePreview);
+    
+    // Set minimum unlock date to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    unlockDateInput.min = tomorrow.toISOString().split('T')[0];
+    
+    // Set maximum birthdate to today
+    const today = new Date();
+    birthdateInput.max = today.toISOString().split('T')[0];
+});
+
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const icon = document.getElementById(fieldId + '-icon');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        field.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+</script>
+{% endblock %}

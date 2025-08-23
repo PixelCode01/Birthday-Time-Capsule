@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}{{ capsule[1] }}'s Time Capsule{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+    <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-birthday-cake me-2"></i>{{ capsule[1] }}'s Time Capsule</h2>
+                <p class="mb-0">Capsule ID: <span class="badge bg-light text-dark fs-6">{{ capsule[0] }}</span></p>
+            </div>
+            <div class="card-body p-4">
+                <!-- Status Section -->
+                <div class="row mb-4">
+                    <div class="col-lg-8">
+                        <div class="glass-morphism p-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5><i class="fas fa-calendar-alt me-2"></i>Unlock Date</h5>
+                                    <p class="fs-4 mb-2" style="color: var(--color-text);">{{ unlock_date.strftime('%B %d, %Y') }}</p>
+                                    {% if not is_unlocked %}
+                                        {% if time_remaining %}
+                                            <p class="mb-0" style="color: var(--color-muted);"><i class="fas fa-clock me-1"></i>{{ time_remaining }} remaining</p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p class="mb-0" style="color: var(--color-warning);"><i class="fas fa-unlock me-1"></i>Ready to unlock!</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><i class="fas fa-heart me-2"></i>Contributions</h5>
+                                    <p class="fs-4 mb-2" style="color: var(--color-text);"><span id="contribCount" data-count="{{ contributions|length }}">{{ contributions|length }}</span></p>
+                                    <p class="mb-0">
+                                        {% if contributions|length == 0 %}
+                                            <i class="fas fa-users me-1"></i><span style="color: var(--color-muted);">Waiting for first contribution</span>
+                                        {% elif contributions|length == 1 %}
+                                            <i class="fas fa-user me-1"></i><span style="color: var(--color-muted);">1 person has contributed</span>
+                                        {% else %}
+                                            <i class="fas fa-users me-1"></i><span style="color: var(--color-muted);">{{ contributions|length }} people have contributed</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            {% if not is_unlocked %}
+                                <div class="progress-bar-container mt-3">
+                                    <div class="progress-bar" id="goalProgress" data-count="{{ contributions|length }}"></div>
+                                </div>
+                                <p class="small mb-0 mt-2"><i class="fas fa-target me-1"></i>Goal: 10 contributions for an amazing reveal!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+            <div class="col-lg-4">
+                        {% if not is_unlocked %}
+                <div class="card border-0 h-100">
+                                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="fas fa-lock fs-1 mb-3" style="color: var(--color-primary);"></i>
+                    <h5 style="color: var(--color-text);">Capsule Locked</h5>
+                    <p class="mb-3" style="color: var(--color-muted);">This magical surprise is safely locked until the special day arrives!</p>
+                                </div>
+                            </div>
+                        {% else %}
+                <div class="card border-0 h-100">
+                                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="fas fa-unlock fs-1 mb-3" style="color: var(--color-success);"></i>
+                    <h5 style="color: var(--color-text);">Ready to Open!</h5>
+                    <p class="mb-3" style="color: var(--color-muted);">The wait is over! Your birthday surprise is ready to be revealed!</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="text-center mb-4">
+                    {% if not is_unlocked %}
+                        <a href="{{ url_for('contribute', capsule_id=capsule[0]) }}" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-plus me-2"></i>Add Your Contribution
+                        </a>
+                        {% if owner_authed %}
+                        <a href="{{ url_for('owner_dashboard', capsule_id=capsule[0]) }}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-user-shield me-2"></i>Owner Dashboard
+                        </a>
+                        <a href="{{ url_for('kiosk_mode', capsule_id=capsule[0]) }}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-bullhorn me-2"></i>Kiosk Mode
+                        </a>
+                        {% elif capsule[7] %}
+                        <a href="{{ url_for('owner_login', capsule_id=capsule[0]) }}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-user-shield me-2"></i>Owner Login
+                        </a>
+                        {% endif %}
+                        <div class="d-inline-flex gap-2 align-items-center flex-wrap justify-content-center">
+                            <button class="btn btn-outline-secondary" onclick="copyToClipboard('{{ capsule[0] }}', this)">
+                                <i class="fas fa-hashtag me-2"></i>Copy Capsule ID
+                            </button>
+                            <button class="btn btn-outline-secondary" id="copyShareUrl">
+                                <i class="fas fa-link me-2"></i>Copy Share Link
+                            </button>
+                            <a class="btn btn-outline-secondary" href="{{ url_for('capsule_ics', capsule_id=capsule[0]) }}">
+                                <i class="fas fa-calendar-plus me-2"></i>Add to Calendar
+                            </a>
+                            <a class="btn btn-outline-secondary" href="{{ url_for('export_capsule', capsule_id=capsule[0]) }}">
+                                <i class="fas fa-file-arrow-down me-2"></i>Export (JSON)
+                            </a>
+                            <a class="btn btn-outline-secondary" href="{{ url_for('export_zip', capsule_id=capsule[0]) }}">
+                                <i class="fas fa-file-archive me-2"></i>Export (ZIP)
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('unlock_capsule', capsule_id=capsule[0]) }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-gift me-2"></i>Unlock Time Capsule
+                        </a>
+                    {% endif %}
+                </div>
+
+                {% if not is_unlocked %}
+                <!-- QR & Owner tools -->
+                <div class="row g-3 align-items-center mb-4">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            {% if capsule|length > 11 and capsule[11] %}
+                                <input type="text" class="form-control" value="{{ request.url_root.rstrip('/') }}/c/{{ capsule[11] }}/contribute" id="shareUrl" readonly>
+                            {% else %}
+                                <input type="text" class="form-control" value="{{ url_for('contribute', capsule_id=capsule[0], _external=True) }}" id="shareUrl" readonly>
+                            {% endif %}
+                            <button class="btn btn-outline-primary" id="copyShareUrl2">
+                                <i class="fas fa-copy me-1"></i>Copy
+                            </button>
+                        </div>
+                        {% if capsule|length > 11 and capsule[11] %}
+                        <div class="small mt-2 text-muted">
+                            Share this link: <code>{{ request.url_root.rstrip('/') }}/c/{{ capsule[11] }}/contribute</code>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <img src="{{ url_for('capsule_qr', capsule_id=capsule[0]) }}" alt="QR Code" class="img-fluid p-2" style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:8px; max-height: 150px;">
+                        <div class="small text-muted mt-1">Scan to contribute</div>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        {% if capsule[7] %}
+                            {% if owner_authed %}
+                                <form method="POST" action="{{ url_for('invite', capsule_id=capsule[0]) }}" class="d-flex gap-2">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <input name="emails" class="form-control" placeholder="email1@example.com, email2@example.com">
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane me-1"></i>Invite</button>
+                                </form>
+                            {% else %}
+                                <a class="btn btn-outline-secondary" href="{{ url_for('owner_login', capsule_id=capsule[0]) }}"><i class="fas fa-user-shield me-1"></i>Owner Login</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Contributors Preview -->
+                <div class="mt-4">
+                    <h5><i class="fas fa-users me-2"></i>Contributors</h5>
+                    {% if contributions %}
+                        <div class="row">
+                            {% for contribution in contributions %}
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card border-0">
+                                        <div class="card-body text-center p-3">
+                                            <div class="contributor-avatar mb-2">
+                                                <i class="fas fa-user-circle fs-1" style="color: var(--color-primary);"></i>
+                                            </div>
+                                            <h6 class="mb-1">{{ contribution[2] }}</h6>
+                                            <p class="small mb-2" style="color: var(--color-muted);">{{ contribution[7] }}</p>
+                                            {% if not is_unlocked %}
+                                                <div class="contribution-preview">
+                                                    {% if contribution[3] %}
+                                                        <span class="badge bg-primary me-1">Message</span>
+                                                    {% endif %}
+                                                    {% if contribution[4] %}
+                                                        <span class="badge bg-success me-1">ASCII Art</span>
+                                                    {% endif %}
+                                                    {% if contribution[5] %}
+                                                        <span class="badge bg-warning me-1">Image</span>
+                                                    {% endif %}
+                                                </div>
+                                                <p class="small mt-2 mb-0"><i class="fas fa-lock me-1"></i>Contents locked</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-inbox fs-1 text-muted mb-3"></i>
+                            <h5 class="text-muted">No contributions yet</h5>
+                            <p class="text-muted mb-4">Be the first to add a birthday message to this special time capsule!</p>
+                            {% if not is_unlocked %}
+                                <a href="{{ url_for('contribute', capsule_id=capsule[0]) }}" class="btn btn-primary">
+                                    <i class="fas fa-heart me-2"></i>Add First Contribution
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contributor-avatar {
+        position: relative;
+    }
+    
+    .contribution-preview .badge {
+        font-size: 0.7rem;
+    }
+    
+    .glass-morphism {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 20px 10px rgba(102, 126, 234, 0.1);
+        }
+    }
+</style>
+
+<script>
+(function(){
+    // Copy share URL buttons
+    function copyToClipboardText(text){
+        navigator.clipboard.writeText(text).then(()=>{}).catch(()=>{});
+    }
+    const shareUrlEl = document.getElementById('shareUrl');
+    const shareUrl = shareUrlEl ? shareUrlEl.value : '';
+    const copyBtn = document.getElementById('copyShareUrl');
+    const copyBtn2 = document.getElementById('copyShareUrl2');
+    if(copyBtn){ copyBtn.addEventListener('click', ()=> copyToClipboardText(shareUrl)); }
+    if(copyBtn2){ copyBtn2.addEventListener('click', ()=> copyToClipboardText(shareUrl)); }
+
+    // Auto-refresh count
+    setInterval(() => {
+    fetch(`/api/capsule_stats/{{ capsule[0] }}`)
+            .then(r=>r.json()).then(data=>{
+                if(!data.error){
+            const ccEl = document.getElementById('contribCount');
+            const currentCount = ccEl ? Number(ccEl.dataset.count) : 0;
+                    if(data.contribution_count !== currentCount){ location.reload(); }
+                }
+            }).catch(()=>{});
+    }, 30000);
+
+    // Initialize progress bar width
+    const gp = document.getElementById('goalProgress');
+    if(gp){
+        const cnt = Number(gp.dataset.count || '0');
+        const pct = Math.max(0, Math.min(100, Math.round((cnt/10)*100)));
+        gp.style.width = pct + '%';
+    }
+})();
+</script>
+{% endblock %}

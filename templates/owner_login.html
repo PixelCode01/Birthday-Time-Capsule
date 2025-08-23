@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Owner Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h2><i class="fas fa-user-shield me-2"></i>Owner Login</h2>
+        <p class="mb-0">Enter the owner PIN you set when creating this capsule.</p>
+      </div>
+      <div class="card-body p-4">
+        <form method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="mb-3">
+            <label for="owner_pin" class="form-label">Owner PIN</label>
+            <input id="owner_pin" name="owner_pin" type="password" class="form-control" placeholder="Enter owner PIN" required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-sign-in-alt me-2"></i>Sign in
+            </button>
+            <a href="{{ url_for('capsule_details', capsule_id=capsule_id) if capsule_id else url_for('index') }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+          </div>
+        </form>
+        <hr>
+        <div class="text-center">
+          <form method="POST" action="{{ url_for('owner_magic_link', capsule_id=capsule_id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-link">Send me a magic login link</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

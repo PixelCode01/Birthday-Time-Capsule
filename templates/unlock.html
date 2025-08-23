@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block title %}Unlock {{ capsule[1] }}'s Capsule{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-unlock me-2"></i>Unlock {{ capsule[1] }}'s Time Capsule</h2>
+                <p class="mb-0">The magical moment has arrived! Enter the secret passphrase to reveal all the birthday surprises.</p>
+            </div>
+            <div class="card-body p-4">
+                <div class="unlock-ceremony text-center mb-4">
+                    <div class="capsule-visual">
+                        <i class="fas fa-gift" id="capsuleIcon"></i>
+                    </div>
+                    <h4 class="mt-3">Happy birthday, {{ capsule[1] }}.</h4>
+                    <p class="text-muted">Your friends and family have prepared something special for you...</p>
+                </div>
+                
+                <form method="POST" id="unlockForm">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <label for="passphrase" class="form-label text-center d-block">
+                                    <i class="fas fa-key me-2"></i>Secret Passphrase
+                                </label>
+                                <div class="passphrase-input-container">
+                                    <input type="password" class="form-control form-control-lg text-center" 
+                                           id="passphrase" name="passphrase" required 
+                                           placeholder="Enter your secret passphrase..."
+                                           autocomplete="off">
+                                    <div class="input-decoration"></div>
+                                </div>
+                                <div class="form-text text-center mt-2">
+                                    <i class="fas fa-info-circle me-1"></i>This is the passphrase you set when creating the capsule
+                                    {% if passphrase_hint %}<br><small class="text-muted">Hint: {{ passphrase_hint }}</small>{% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-lg px-5" id="unlockBtn">
+                                    <i class="fas fa-magic me-2"></i>Unlock the Magic
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="unlock-hints mt-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="hint-card p-4" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 12px;">
+                                <h5><i class="fas fa-lightbulb me-2"></i>Passphrase Hints</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-check me-2"></i>Remember what you chose when creating this capsule</li>
+                                    <li class="mb-2"><i class="fas fa-check me-2"></i>It might be related to a special memory</li>
+                                    <li class="mb-0"><i class="fas fa-check me-2"></i>Check if Caps Lock is on</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="countdown-card p-4" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: 12px;">
+                                <h5><i class="fas fa-calendar-check me-2"></i>Unlock available</h5>
+                                <p class="mb-3">This time capsule was created on {{ capsule[5][:10] }} and has been waiting for this moment!</p>
+                                <div class="birthday-countdown">
+                                    <div class="fs-4">It's time.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="motivational-section mt-4 text-center">
+                    <div class="ascii-art unlock-teaser">
+    Your birthday surprise awaits.
+        
+           LOCKED TREASURE
+           
+          .-"-. .-"-..-"-..-"-.
+         /     X     X     X   \
+    |  []   []   []   []  |
+    |   *    *    *    *  |
+         \     X     X     X   /
+          '-.-' '-.-''-.-''-.-'
+           
+        Enter the magic words to unlock!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .capsule-visual {
+        position: relative;
+        margin: 20px 0;
+    }
+    
+    #capsuleIcon {
+        font-size: 6rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: pulse 2s infinite, glow 3s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+    
+    @keyframes glow {
+        0%, 100% {
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+        }
+        50% {
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8));
+        }
+    }
+    
+    .passphrase-input-container {
+        position: relative;
+    }
+    
+    .passphrase-input-container input {
+        border: 3px solid #e9ecef;
+        border-radius: 25px;
+        padding: 15px 25px;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .passphrase-input-container input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.3rem rgba(102, 126, 234, 0.25);
+        background: white;
+    }
+    
+    .input-decoration {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .passphrase-input-container input:focus + .input-decoration {
+        opacity: 1;
+        animation: sparkle 1s infinite;
+    }
+    
+    @keyframes sparkle {
+        0%, 100% {
+            transform: translateY(-50%) scale(1);
+        }
+        50% {
+            transform: translateY(-50%) scale(1.2);
+        }
+    }
+    
+    .hint-card, .countdown-card {
+        transition: transform 0.3s ease;
+        margin-bottom: 20px;
+    }
+    
+    .hint-card:hover, .countdown-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .unlock-teaser {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        padding: 30px;
+        border-radius: 20px;
+        border: 2px dashed #667eea;
+        margin: 20px 0;
+    }
+    
+    .birthday-countdown {
+        animation: celebrate 2s infinite;
+    }
+    
+    @keyframes celebrate {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+    }
+    
+    #unlockBtn {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #unlockBtn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+    }
+    
+    #unlockBtn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    #unlockBtn:hover::before {
+        left: 100%;
+    }
+    
+    .form-control:focus {
+        animation: inputFocus 0.3s ease;
+    }
+    
+    @keyframes inputFocus {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.02);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('unlockForm');
+    const passphraseInput = document.getElementById('passphrase');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const capsuleIcon = document.getElementById('capsuleIcon');
+    
+    // Add typing effect to passphrase input
+    passphraseInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            capsuleIcon.style.animation = 'pulse 1s infinite, glow 2s infinite';
+            capsuleIcon.style.color = '#4facfe';
+        } else {
+            capsuleIcon.style.animation = 'pulse 2s infinite, glow 3s infinite';
+            capsuleIcon.style.color = '#667eea';
+        }
+    });
+    
+    // Enhanced form submission
+    form.addEventListener('submit', function(e) {
+        unlockBtn.disabled = true;
+        unlockBtn.innerHTML = '<span class="loading-spinner me-2"></span>Unlocking Magic...';
+        
+        // Add dramatic pause for effect
+        setTimeout(() => {
+            // Form will submit naturally after this
+        }, 1000);
+    });
+    
+    // Add enter key magic
+    passphraseInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            // Add visual feedback
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
+        }
+    });
+    
+    // Focus on passphrase input automatically
+    setTimeout(() => {
+        passphraseInput.focus();
+    }, 500);
+    
+    // Add floating particles effect
+    function createFloatingParticle() {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = '4px';
+        particle.style.height = '4px';
+        particle.style.background = `hsl(${Math.random() * 60 + 200}, 100%, 70%)`;
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = '100%';
+        particle.style.animation = 'floatUp 4s linear infinite';
+        particle.style.opacity = '0.7';
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 4000);
+    }
+    
+    // Add CSS for floating particles
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotateZ(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotateZ(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Start particle effect
+    setInterval(createFloatingParticle, 1000);
+});
+</script>
+{% endblock %}

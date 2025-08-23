@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Access PIN for {{ capsule[1] }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h2><i class="fas fa-key me-2"></i>Enter Access PIN</h2>
+        <p class="mb-0">This capsule requires a PIN to contribute.</p>
+      </div>
+      <div class="card-body p-4">
+        <form method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="mb-3">
+            <label for="access_pin" class="form-label">Access PIN</label>
+            <input id="access_pin" name="access_pin" type="password" class="form-control" placeholder="Enter PIN" required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-unlock me-2"></i>Continue
+            </button>
+            <a href="{{ url_for('capsule_details', capsule_id=capsule[0]) }}" class="btn btn-outline-secondary ms-2">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

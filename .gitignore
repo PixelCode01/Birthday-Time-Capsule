@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and runtime
+logs/
+*.log
+
+# Database and artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.zip
+
+# VS Code
+.vscode/
+
+# Cache
+.cache/
+*.egg-info/
+
+# Images or uploads (none by default)
+# uploads/

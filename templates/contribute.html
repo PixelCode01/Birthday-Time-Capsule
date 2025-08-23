@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Contribute to {{ capsule[1] }}'s Capsule{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-heart me-2"></i>Contribute to {{ capsule[1] }}'s Time Capsule</h2>
+                <p class="mb-0">Your message will be revealed on {{ capsule[3] }}</p>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data" id="contributeForm">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="contributor_name" class="form-label">
+                                <i class="fas fa-user me-1"></i>Your Name
+                            </label>
+                            <input type="text" class="form-control" id="contributor_name" name="contributor_name" required 
+                                   placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="contributor_email" class="form-label">
+                                <i class="fas fa-envelope me-1"></i>Your Email (optional)
+                            </label>
+                            <input type="email" class="form-control" id="contributor_email" name="contributor_email" placeholder="you@example.com">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="contribution_type" class="form-label">
+                                <i class="fas fa-list me-1"></i>Type of Contribution
+                            </label>
+                            <select class="form-select" id="contribution_type" name="contribution_type">
+                                <option value="message">Birthday message</option>
+                                <option value="memory">Shared memory</option>
+                                <option value="wish">Birthday wish</option>
+                                <option value="creative">Creative expression</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="contribution-tabs mb-4">
+                        <ul class="nav nav-pills nav-justified mb-3" id="contributionTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="message-tab" data-bs-toggle="pill" data-bs-target="#message-pane" type="button" role="tab">
+                                    <i class="fas fa-comment me-2"></i>Message
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="ascii-tab" data-bs-toggle="pill" data-bs-target="#ascii-pane" type="button" role="tab">
+                                    <i class="fas fa-pencil-alt me-2"></i>ASCII Art
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="image-tab" data-bs-toggle="pill" data-bs-target="#image-pane" type="button" role="tab">
+                                    <i class="fas fa-image me-2"></i>Image
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="contributionTabContent">
+                            <div class="tab-pane fade show active" id="message-pane" role="tabpanel">
+                                <label for="message" class="form-label">
+                                    <i class="fas fa-heart me-1"></i>Your Birthday Message
+                                </label>
+                                <textarea class="form-control" id="message" name="message" rows="6" 
+                                          placeholder="Write a heartfelt birthday message...&#10;&#10;Share a favorite memory, express your wishes for their future, or tell them what they mean to you!"></textarea>
+                                <div class="form-text">
+                                    <i class="fas fa-lightbulb me-1"></i>Tip: Personal, heartfelt messages create the most magical reveals!
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="ascii-pane" role="tabpanel">
+                                <label for="ascii_art" class="form-label">
+                                    <i class="fas fa-paint-brush me-1"></i>ASCII Art Doodle
+                                </label>
+                                <div class="ascii-tools mb-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('cake')">Cake</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('balloons')">Balloons</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('party')">Party</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('heart')">Heart</button>
+                                </div>
+                                <textarea class="form-control ascii-art" id="ascii_art" name="ascii_art" rows="10" 
+                                          placeholder="Create your ASCII art here...&#10;&#10;Use characters like: * - | / \ ( ) < > to create drawings!"></textarea>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Click the buttons above for templates, or create your own unique art!
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="image-pane" role="tabpanel">
+                                <label for="image" class="form-label">
+                                    <i class="fas fa-camera me-1"></i>Upload Special Image
+                                </label>
+                                <div class="image-upload-area">
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(this)">
+                                    <div class="form-text mb-3">
+                                        <i class="fas fa-info-circle me-1"></i>Upload a birthday photo, drawing, or special memory (Max 5MB)
+                                    </div>
+                                    <div id="imagePreview" class="image-preview" style="display: none;">
+                                        <img id="previewImg" src="" alt="Preview" class="img-fluid rounded">
+                                        <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeImage()">
+                                            <i class="fas fa-trash me-1"></i>Remove Image
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="fas fa-gift me-2"></i>Add to Time Capsule
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Inspiration Section -->
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <div class="inspiration-card p-4" style="background: linear-gradient(135deg, #ffeaa7, #fab1a0); border-radius: 15px;">
+                            <h5><i class="fas fa-lightbulb me-2"></i>Message Ideas</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Share a favorite memory together</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Write about what makes them special</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Make predictions for their future</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Tell them your birthday wishes for them</li>
+                                <li class="mb-0"><i class="fas fa-star text-warning me-2"></i>Include inside jokes or funny stories</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ascii-examples p-4" style="background: linear-gradient(135deg, #a8edea, #fed6e3); border-radius: 15px;">
+                            <h5><i class="fas fa-palette me-2"></i>ASCII Art Examples</h5>
+                            <div class="ascii-art small">
+Birthday Cake:          Balloons:
+   ___     ___             o  o
+  |[_]|   |[_]|           /|\/|\
+  |   |___|   |          / |  |\
+  |___________|           \|__|/
+                    
+Party Hat:           Happy Face:
+     /\                 :-D
+    /  \               \o/
+   /____\               |
+      ||               / \
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .nav-pills .nav-link {
+        border-radius: 25px;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-pills .nav-link.active {
+        background: var(--primary-gradient);
+    }
+    
+    .ascii-tools .btn {
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .image-upload-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .image-upload-area:hover {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.05);
+    }
+    
+    .image-preview img {
+        max-width: 300px;
+        max-height: 200px;
+        object-fit: cover;
+    }
+    
+    .inspiration-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .inspiration-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
+<script>
+function insertAsciiTemplate(type) {
+    const textarea = document.getElementById('ascii_art');
+    let template = '';
+    
+    switch(type) {
+        case 'cake':
+            template = `   ___     ___
+  |[_]|   |[_]|
+  |   |___|   |
+  |___________|`;
+            break;
+        case 'balloons':
+            template = `    o  o    o
+   /|\\/|\\/|\\
+  / |  |  | \\
+   \\|__|__|/
+    ^^^^^^^^`;
+            break;
+        case 'party':
+            template = `  \\o/  \\o/  \\o/
+   |    |    |
+  / \\  / \\  / \\
+ PARTY TIME!!!`;
+            break;
+        case 'heart':
+            template = `   **   **
+ **** ****
+***********
+ *********
+  *****
+   ***
+    *`;
+            break;
+    }
+    
+    textarea.value = textarea.value + (textarea.value ? '\\n\\n' : '') + template;
+    textarea.focus();
+}
+
+function previewImage(input) {
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+function removeImage() {
+    document.getElementById('image').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+}
+
+// Form validation
+document.getElementById('contributeForm').addEventListener('submit', function(e) {
+    const message = document.getElementById('message').value.trim();
+    const asciiArt = document.getElementById('ascii_art').value.trim();
+    const image = document.getElementById('image').files.length > 0;
+    
+    if (!message && !asciiArt && !image) {
+        e.preventDefault();
+        alert('Please add at least one type of contribution (message, ASCII art, or image)!');
+        return false;
+    }
+    
+    // Check image size
+    const imageFile = document.getElementById('image').files[0];
+    if (imageFile && imageFile.size > 5 * 1024 * 1024) {
+        e.preventDefault();
+        alert('Image file is too large! Please use files smaller than 5MB.');
+        return false;
+    }
+    
+    return true;
+});
+
+// Auto-save draft functionality
+let autoSaveTimer;
+function autoSave() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+        const formData = {
+            name: document.getElementById('contributor_name').value,
+            message: document.getElementById('message').value,
+            ascii_art: document.getElementById('ascii_art').value
+        };
+        localStorage.setItem('contributionDraft_{{ capsule[0] }}', JSON.stringify(formData));
+    }, 2000);
+}
+
+// Load draft on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const draft = localStorage.getItem('contributionDraft_{{ capsule[0] }}');
+    if (draft) {
+        const data = JSON.parse(draft);
+        document.getElementById('contributor_name').value = data.name || '';
+        document.getElementById('message').value = data.message || '';
+        document.getElementById('ascii_art').value = data.ascii_art || '';
+    }
+    
+    // Add auto-save listeners
+    ['contributor_name', 'message', 'ascii_art'].forEach(id => {
+        document.getElementById(id).addEventListener('input', autoSave);
+    });
+});
+
+// Clear draft on successful submission
+document.getElementById('contributeForm').addEventListener('submit', function() {
+    localStorage.removeItem('contributionDraft_{{ capsule[0] }}');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Owner Dashboard - {{ capsule[1] }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2><i class="fas fa-user-shield me-2"></i>Owner Dashboard</h2>
+  <p class="mb-0">Capsule ID: <span class="badge bg-light text-dark fs-6">{{ capsule[0] }}</span> - Unlocks {{ unlock_date.strftime('%B %d, %Y') }}</p>
+        {% if capsule[9] %}
+          <p class="mb-0 small text-muted">Owner email: {{ capsule[9] or '-' }} - Verified: <span class="badge bg-{{ 'success' if capsule[13] else 'secondary' }}">{{ 'Yes' if capsule[13] else 'No' }}</span>
+          {% if not capsule[13] and capsule[9] %}
+            <form class="d-inline" method="POST" action="{{ url_for('owner_verify_resend', capsule_id=capsule[0]) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn-sm btn-outline-primary ms-2">Resend verify</button>
+            </form>
+          {% endif %}
+          </p>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <a href="{{ url_for('capsule_details', capsule_id=capsule[0]) }}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-1"></i>Back to Capsule</a>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="glass-morphism p-3 h-100">
+              <h5 class="mb-3"><i class="fas fa-paper-plane me-2"></i>Send Invites</h5>
+              <form method="POST" action="{{ url_for('invite', capsule_id=capsule[0]) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="mb-2">
+                  <label class="form-label">Emails (comma, space, or newline separated)</label>
+                  <textarea class="form-control" name="emails" rows="3" placeholder="alice@example.com, bob@example.com"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane me-1"></i>Send</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="glass-morphism p-3 h-100">
+              <h5 class="mb-3"><i class="fas fa-envelope-open-text me-2"></i>Invites</h5>
+              {% if invites %}
+              <div class="table-responsive">
+                <table class="table align-middle">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>RSVP</th>
+                      <th>Contributed</th>
+                      <th>Invited</th>
+                      <th>Last Attempt</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for inv in invites %}
+                    <tr>
+                      <td>{{ inv[1] }}</td>
+                      <td><span class="badge bg-{{ 'secondary' if inv[2] == 'pending' else 'success' if inv[2]=='sent' else 'danger' if inv[2]=='revoked' else 'dark' }} text-uppercase">{{ inv[2] }}</span></td>
+                      <td class="text-muted small">{{ inv[5] or '-' }}</td>
+                      <td class="text-muted small">{{ inv[6] or '-' }}</td>
+                      <td class="text-muted small">{{ inv[3] }}</td>
+                      <td class="text-muted small">{{ inv[4] or '-' }}</td>
+                      <td class="text-end">
+                        <div class="btn-group">
+                          <form method="POST" action="{{ url_for('resend_invite', capsule_id=capsule[0], invite_id=inv[0]) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-sm btn-outline-primary" {% if inv[2] != 'pending' %}disabled{% endif %}>
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </form>
+                          <form method="POST" action="{{ url_for('revoke_invite', capsule_id=capsule[0], invite_id=inv[0]) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-sm btn-outline-danger" {% if inv[2] != 'pending' %}disabled{% endif %}>
+                              <i class="fas fa-ban"></i>
+                            </button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% else %}
+                <p class="text-muted">No invites yet.</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="glass-morphism p-3">
+              <h5 class="mb-3"><i class="fas fa-sliders-h me-2"></i>Capsule Settings</h5>
+              <form method="POST" action="{{ url_for('owner_update_settings', capsule_id=capsule[0]) }}" class="row g-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="col-md-4">
+                  <label class="form-label">Unlock Date</label>
+                  <input type="date" class="form-control" name="unlock_date" value="{{ capsule[3] }}">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Custom Share Link</label>
+                  <div class="input-group">
+                    <span class="input-group-text">/c/</span>
+                    <input type="text" class="form-control" name="slug" placeholder="{{ capsule[1]|lower|replace(' ', '-') }}" value="{{ capsule[11] if capsule|length > 11 else '' }}">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Passphrase Hint</label>
+                  <input type="text" class="form-control" name="passphrase_hint" value="{{ capsule[12] if capsule|length > 12 else '' }}" placeholder="Optional hint">
+                </div>
+                <div class="col-12 d-flex flex-wrap gap-2">
+                  <button class="btn btn-primary" type="submit"><i class="fas fa-save me-1"></i>Save</button>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('kiosk_mode', capsule_id=capsule[0]) }}"><i class="fas fa-bullhorn me-1"></i>Open Kiosk Mode</a>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('export_zip', capsule_id=capsule[0]) }}"><i class="fas fa-file-archive me-1"></i>Export ZIP</a>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('export_capsule_csv', capsule_id=capsule[0]) }}"><i class="fas fa-file-csv me-1"></i>Export CSV</a>
+                  <a class="btn btn-outline-secondary" href="{{ url_for('export_invites_csv', capsule_id=capsule[0]) }}"><i class="fas fa-address-book me-1"></i>Invites CSV</a>
+                  {% if capsule|length > 11 and capsule[11] %}
+                    <a class="btn btn-outline-secondary" href="{{ url_for('capsule_qr_slug', slug=capsule[11]) }}"><i class="fas fa-qrcode me-1"></i>Share QR</a>
+                  {% else %}
+                    <a class="btn btn-outline-secondary" href="{{ url_for('capsule_qr', capsule_id=capsule[0]) }}"><i class="fas fa-qrcode me-1"></i>Share QR</a>
+                  {% endif %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Contributions ({{ contributions|length }})</h5>
+      </div>
+      <div class="card-body">
+        {% if contributions %}
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Contributor</th>
+                <th>Type</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in contributions %}
+              <tr>
+                <td>{{ c[0] }}</td>
+                <td>{{ c[2] }}</td>
+                <td>{{ c[8] }}</td>
+                <td class="text-muted small">{{ c[7] }}</td>
+                <td class="text-end">
+                  <form method="POST" action="{{ url_for('delete_contribution', capsule_id=capsule[0], contrib_id=c[0]) }}" onsubmit="return confirm('Delete this contribution?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+          <p class="text-muted">No contributions yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
