@@ -10,3 +10,4 @@ Pillow==10.4.0
 APScheduler==3.10.4
 python-dotenv==1.0.1
 Flask-Compress==1.15
+gunicorn==21.2.0
