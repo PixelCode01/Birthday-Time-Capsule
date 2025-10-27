@@ -7,8 +7,8 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-header">
-                <h2><i class="fas fa-heart me-2"></i>Contribute to {{ capsule[1] }}'s Time Capsule</h2>
-                <p class="mb-0">Your message will be revealed on {{ capsule[3] }}</p>
+                <h2><i class="fas fa-heart me-2"></i>Add Your Birthday Wish for {{ capsule[1] }}</h2>
+                <p class="mb-0">Your message will be revealed on {{ capsule[3] }}—they'll love it!</p>
             </div>
             <div class="card-body p-4">
                 <form method="POST" enctype="multipart/form-data" id="contributeForm">
@@ -16,30 +16,32 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="contributor_name" class="form-label">
-                                <i class="fas fa-user me-1"></i>Your Name
+                                <i class="fas fa-user me-1"></i>Your name
                             </label>
                             <input type="text" class="form-control" id="contributor_name" name="contributor_name" required 
-                                   placeholder="Enter your name">
+                                   placeholder="So they know who it's from">
+                            <div class="form-text">Just your first name works great!</div>
                         </div>
                         
                         <div class="col-md-6 mb-3">
                             <label for="contributor_email" class="form-label">
-                                <i class="fas fa-envelope me-1"></i>Your Email (optional)
+                                <i class="fas fa-envelope me-1"></i>Your email (optional)
                             </label>
-                            <input type="email" class="form-control" id="contributor_email" name="contributor_email" placeholder="you@example.com">
+                            <input type="email" class="form-control" id="contributor_email" name="contributor_email" placeholder="your.email@example.com">
+                            <div class="form-text">In case we need to reach you</div>
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="contribution_type" class="form-label">
-                                <i class="fas fa-list me-1"></i>Type of Contribution
+                                <i class="fas fa-heart me-1"></i>What kind of wish is this?
                             </label>
                             <select class="form-select" id="contribution_type" name="contribution_type">
-                                <option value="message">Birthday message</option>
-                                <option value="memory">Shared memory</option>
-                                <option value="wish">Birthday wish</option>
-                                <option value="creative">Creative expression</option>
+                                <option value="message">A birthday message 🎂</option>
+                                <option value="memory">A shared memory 💭</option>
+                                <option value="wish">A birthday wish 🌟</option>
+                                <option value="creative">Something creative 🎨</option>
                             </select>
                         </div>
                     </div>
@@ -48,17 +50,17 @@
                         <ul class="nav nav-pills nav-justified mb-3" id="contributionTabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="message-tab" data-bs-toggle="pill" data-bs-target="#message-pane" type="button" role="tab">
-                                    <i class="fas fa-comment me-2"></i>Message
+                                    <i class="fas fa-comment me-2"></i>Write a Message
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="ascii-tab" data-bs-toggle="pill" data-bs-target="#ascii-pane" type="button" role="tab">
-                                    <i class="fas fa-pencil-alt me-2"></i>ASCII Art
+                                    <i class="fas fa-pencil-alt me-2"></i>Draw Art
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="image-tab" data-bs-toggle="pill" data-bs-target="#image-pane" type="button" role="tab">
-                                    <i class="fas fa-image me-2"></i>Image
+                                    <i class="fas fa-image me-2"></i>Add a Photo
                                 </button>
                             </li>
                         </ul>
@@ -69,42 +71,42 @@
                                     <i class="fas fa-heart me-1"></i>Your Birthday Message
                                 </label>
                                 <textarea class="form-control" id="message" name="message" rows="6" 
-                                          placeholder="Write a heartfelt birthday message...&#10;&#10;Share a favorite memory, express your wishes for their future, or tell them what they mean to you!"></textarea>
+                                          placeholder="Write something from your heart...&#10;&#10;Maybe share your favorite memory together, tell them what makes them special, or wish them something wonderful for the year ahead!"></textarea>
                                 <div class="form-text">
-                                    <i class="fas fa-lightbulb me-1"></i>Tip: Personal, heartfelt messages create the most magical reveals!
+                                    <i class="fas fa-lightbulb me-1"></i>Don't overthink it—just be yourself! They'll treasure whatever you write.
                                 </div>
                             </div>
                             
                             <div class="tab-pane fade" id="ascii-pane" role="tabpanel">
                                 <label for="ascii_art" class="form-label">
-                                    <i class="fas fa-paint-brush me-1"></i>ASCII Art Doodle
+                                    <i class="fas fa-paint-brush me-1"></i>Draw Something Fun with Text
                                 </label>
                                 <div class="ascii-tools mb-2">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('cake')">Cake</button>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('balloons')">Balloons</button>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('party')">Party</button>
-                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('heart')">Heart</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('cake')">🎂 Cake</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('balloons')">🎈 Balloons</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('party')">🎉 Party</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="insertAsciiTemplate('heart')">❤️ Heart</button>
                                 </div>
                                 <textarea class="form-control ascii-art" id="ascii_art" name="ascii_art" rows="10" 
-                                          placeholder="Create your ASCII art here...&#10;&#10;Use characters like: * - | / \ ( ) < > to create drawings!"></textarea>
+                                          placeholder="Create your art here...&#10;&#10;Try using: * - | / \ ( ) < > to make fun drawings! Or click a button above to start with a template."></textarea>
                                 <div class="form-text">
-                                    <i class="fas fa-info-circle me-1"></i>Click the buttons above for templates, or create your own unique art!
+                                    <i class="fas fa-info-circle me-1"></i>Click the buttons above for ready-made designs, or create your own masterpiece!
                                 </div>
                             </div>
                             
                             <div class="tab-pane fade" id="image-pane" role="tabpanel">
                                 <label for="image" class="form-label">
-                                    <i class="fas fa-camera me-1"></i>Upload Special Image
+                                    <i class="fas fa-camera me-1"></i>Upload a Special Photo
                                 </label>
                                 <div class="image-upload-area">
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(this)">
                                     <div class="form-text mb-3">
-                                        <i class="fas fa-info-circle me-1"></i>Upload a birthday photo, drawing, or special memory (Max 5MB)
+                                        <i class="fas fa-info-circle me-1"></i>Share a photo of you two, a fun memory, or anything special (up to 5MB)
                                     </div>
                                     <div id="imagePreview" class="image-preview" style="display: none;">
                                         <img id="previewImg" src="" alt="Preview" class="img-fluid rounded">
                                         <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeImage()">
-                                            <i class="fas fa-trash me-1"></i>Remove Image
+                                            <i class="fas fa-trash me-1"></i>Remove Photo
                                         </button>
                                     </div>
                                 </div>
@@ -114,8 +116,9 @@
                     
                     <div class="text-center mb-4">
                         <button type="submit" class="btn btn-primary btn-lg px-5">
-                            <i class="fas fa-gift me-2"></i>Add to Time Capsule
+                            <i class="fas fa-gift me-2"></i>Add My Wish to the Surprise
                         </button>
+                        <p class="small text-muted mt-2">It'll stay secret until their birthday!</p>
                     </div>
                 </form>
                 
@@ -123,21 +126,21 @@
                 <div class="row mt-5">
                     <div class="col-md-6 mb-3">
                         <div class="p-4" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
-                            <h5><i class="fas fa-lightbulb me-2"></i>Message Ideas</h5>
+                            <h5><i class="fas fa-lightbulb me-2"></i>Need Ideas?</h5>
                             <ul class="list-unstyled mb-0">
-                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Share a favorite memory together</li>
-                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Write about what makes them special</li>
-                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Make wishes for their future</li>
-                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Include inside jokes</li>
-                                <li class="mb-0"><i class="fas fa-star text-warning me-2"></i>Tell them how they've impacted your life</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Tell them about your favorite memory together</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Describe what makes them such a great friend</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Share your hopes for their next year</li>
+                                <li class="mb-2"><i class="fas fa-star text-warning me-2"></i>Include an inside joke only they'd understand</li>
+                                <li class="mb-0"><i class="fas fa-star text-warning me-2"></i>Just tell them how much they mean to you</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="p-4" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
-                            <h5><i class="fas fa-palette me-2"></i>ASCII Art Examples</h5>
+                            <h5><i class="fas fa-palette me-2"></i>Art Examples</h5>
                             <div class="ascii-art small">
-Cake:              Balloons:
+Simple Cake:       Balloons:
   ___                o  o
  |[_]|              /|\/|\
  |___|             / |  |\
@@ -148,6 +151,7 @@ Happy Face:        Heart:
     |            ***********
    / \            *********
                             </div>
+                            <p class="small mb-0 mt-2 text-muted">Or create your own! Anything goes!</p>
                         </div>
                     </div>
                 </div>

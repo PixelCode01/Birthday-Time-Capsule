@@ -8,9 +8,9 @@
     <div class="card mb-4">
       <div class="card-header">
         <h2><i class="fas fa-user-shield me-2"></i>Owner Dashboard</h2>
-  <p class="mb-0">Capsule ID: <span class="badge bg-light text-dark fs-6">{{ capsule[0] }}</span> - Unlocks {{ unlock_date.strftime('%B %d, %Y') }}</p>
+  <p class="mb-0">Capsule ID: <span class="badge fs-6" style="background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);">{{ capsule[0] }}</span> - Unlocks {{ unlock_date.strftime('%B %d, %Y') }}</p>
         {% if capsule[9] %}
-          <p class="mb-0 small text-muted">Owner email: {{ capsule[9] or '-' }} - Verified: <span class="badge bg-{{ 'success' if capsule[13] else 'secondary' }}">{{ 'Yes' if capsule[13] else 'No' }}</span>
+          <p class="mb-0 small text-muted">Owner email: {{ capsule[9] or '-' }} - Verified: <span class="badge" style="background: {{ 'var(--color-success)' if capsule[13] else 'var(--color-muted)' }}; color: var(--color-primary-contrast);">{{ 'Yes' if capsule[13] else 'No' }}</span>
           {% if not capsule[13] and capsule[9] %}
             <form class="d-inline" method="POST" action="{{ url_for('owner_verify_resend', capsule_id=capsule[0]) }}">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -86,7 +86,7 @@
                 </table>
               </div>
               {% else %}
-                <p class="text-muted">No invites yet.</p>
+                <p style="color: var(--color-muted);">No invites yet.</p>
               {% endif %}
             </div>
           </div>
@@ -165,7 +165,7 @@
           </table>
         </div>
         {% else %}
-          <p class="text-muted">No contributions yet.</p>
+          <p style="color: var(--color-muted);">No contributions yet.</p>
         {% endif %}
       </div>
     </div>

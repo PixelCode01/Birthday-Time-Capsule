@@ -5,8 +5,8 @@
     <div class="col-lg-10">
         <div class="card">
             <div class="card-header">
-                <h1><i class="fas fa-gift me-2"></i>Welcome to Birthday Time Capsule</h1>
-                <p class="mb-0 fs-5">Create heartfelt birthday surprises that unlock in the future</p>
+                <h1><i class="fas fa-gift me-2"></i>Create a Birthday Surprise That Waits</h1>
+                <p class="mb-0 fs-5">Collect birthday wishes from friends that magically open on the big day</p>
             </div>
             <div class="card-body p-4">
                 <!-- Stats Section -->
@@ -15,14 +15,14 @@
                         <div class="glass-morphism text-center p-4">
                             <i class="fas fa-birthday-cake fs-1 mb-3" style="color: var(--color-primary);"></i>
                             <h3 style="color: var(--color-text);">{{ total_capsules }}</h3>
-                            <p class="mb-0" style="color: var(--color-muted);">Time Capsules Created</p>
+                            <p class="mb-0" style="color: var(--color-muted);">Birthday Surprises Created</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="glass-morphism text-center p-4">
                             <i class="fas fa-heart fs-1 mb-3" style="color: var(--color-danger);"></i>
                             <h3 style="color: var(--color-text);">{{ total_contributions }}</h3>
-                            <p class="mb-0" style="color: var(--color-muted);">Birthday Messages Shared</p>
+                            <p class="mb-0" style="color: var(--color-muted);">Heartfelt Messages Shared</p>
                         </div>
                     </div>
                 </div>
@@ -33,10 +33,10 @@
                         <div class="card h-100 border-0">
                             <div class="card-body text-center p-4">
                                 <i class="fas fa-plus-circle fs-1 text-primary mb-3"></i>
-                                <h4 class="mb-3">Create New Capsule</h4>
-                                <p class="mb-4">Start collecting birthday memories! Create a time capsule and invite friends to add messages.</p>
+                                <h4 class="mb-3">Start a Birthday Surprise</h4>
+                                <p class="mb-4">Planning someone's birthday? Create a surprise collection where friends can leave birthday wishes that open on the special day!</p>
                                 <a href="{{ url_for('create_capsule') }}" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-plus me-2"></i>Create Capsule
+                                    <i class="fas fa-plus me-2"></i>Start Creating
                                 </a>
                             </div>
                         </div>
@@ -45,10 +45,10 @@
             <div class="card h-100 border-0">
                             <div class="card-body text-center p-4">
                 <i class="fas fa-search fs-1 text-warning mb-3"></i>
-                                <h4 class="mb-3">Find a Capsule</h4>
-                                <p class="mb-4">Have a capsule ID or link? Search here to add your birthday wishes!</p>
+                                <h4 class="mb-3">Add Your Birthday Wish</h4>
+                                <p class="mb-4">Got invited to contribute? Enter the number you received to add your message, photo, or birthday art!</p>
                 <a href="{{ url_for('find_capsule') }}" class="btn btn-warning btn-lg">
-                                    <i class="fas fa-search me-2"></i>Find Capsule
+                                    <i class="fas fa-search me-2"></i>Find & Contribute
                                 </a>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                 <!-- How It Works -->
                 <div class="mt-5">
                     <h2 class="text-center mb-4">
-                        <i class="fas fa-question-circle me-2"></i>How It Works
+                        <i class="fas fa-question-circle me-2"></i>How Does It Work?
                     </h2>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 mb-4">
@@ -66,8 +66,8 @@
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">1</div>
                     <i class="fas fa-edit fs-2 mb-3" style="color: var(--color-primary);"></i>
-                                    <h5>Create Your Capsule</h5>
-                                    <p class="mb-0">Set a future birthday date and write a letter to your future self</p>
+                                    <h5>Pick a Date</h5>
+                                    <p class="mb-0">Choose their birthday and write a personal message for them to read later</p>
                                 </div>
                             </div>
                         </div>
@@ -76,8 +76,8 @@
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">2</div>
                     <i class="fas fa-share-alt fs-2 mb-3" style="color: var(--color-success);"></i>
-                                    <h5>Share with Friends</h5>
-                                    <p class="mb-0">Share your capsule link with friends and family</p>
+                                    <h5>Invite Friends</h5>
+                                    <p class="mb-0">Send them a simple number so they can add their birthday wishes too</p>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +86,8 @@
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">3</div>
                     <i class="fas fa-comments fs-2 mb-3" style="color: var(--color-warning);"></i>
-                                    <h5>Collect Messages</h5>
-                                    <p class="mb-0">Friends add messages, photos, and ASCII art</p>
+                                    <h5>Everyone Contributes</h5>
+                                    <p class="mb-0">Friends write messages, draw art, and share photos—all kept secret until the big day</p>
                                 </div>
                             </div>
                         </div>
@@ -96,8 +96,8 @@
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">4</div>
                     <i class="fas fa-gift fs-2 mb-3" style="color: var(--color-danger);"></i>
-                                    <h5>Unlock & Celebrate</h5>
-                                    <p class="mb-0">On the special day, unlock and enjoy all the wishes</p>
+                                    <h5>Magic Moment!</h5>
+                                    <p class="mb-0">On their birthday, everything unlocks and they see all the love at once</p>
                                 </div>
                             </div>
                         </div>
@@ -107,28 +107,28 @@
                 <!-- Features Section -->
                 <div class="mt-5">
                     <h2 class="text-center mb-4">
-                        <i class="fas fa-star me-2"></i>Key Features
+                        <i class="fas fa-star me-2"></i>What Makes This Special
                     </h2>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <div class="feature-item text-center p-4">
                                 <i class="fas fa-lock fs-2 text-primary mb-3"></i>
-                                <h6 class="mb-2">Secure & Private</h6>
-                                <p class="mb-0 small">Your messages are encrypted and stay locked until the unlock date</p>
+                                <h6 class="mb-2">Kept Secret Until The Day</h6>
+                                <p class="mb-0 small">All wishes stay completely hidden until their actual birthday—building the perfect surprise!</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="feature-item text-center p-4">
-                                <i class="fas fa-calendar-check fs-2 text-success mb-3"></i>
-                                <h6 class="mb-2">Date-Locked</h6>
-                                <p class="mb-0 small">Set any future birthday date - the capsule unlocks automatically</p>
+                                <i class="fas fa-heart fs-2 text-danger mb-3"></i>
+                                <h6 class="mb-2">Everyone Can Join In</h6>
+                                <p class="mb-0 small">Friends, family, coworkers—anyone can add their wishes with just a simple number</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="feature-item text-center p-4">
-                                <i class="fas fa-image fs-2 text-warning mb-3"></i>
-                                <h6 class="mb-2">Photos & More</h6>
-                                <p class="mb-0 small">Add text, ASCII art, and photos to make it memorable</p>
+                                <i class="fas fa-smile-beam fs-2 text-warning mb-3"></i>
+                                <h6 class="mb-2">More Than Just Text</h6>
+                                <p class="mb-0 small">Share photos, create fun ASCII art, write heartfelt stories—make it uniquely yours</p>
                             </div>
                         </div>
                     </div>

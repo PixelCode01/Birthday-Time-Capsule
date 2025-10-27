@@ -513,7 +513,7 @@ def create_capsule():
         birthdate = request.form['birthdate']
         unlock_date = request.form['unlock_date']
         passphrase = request.form['passphrase']
-        future_letter = request.form['future_letter']
+        future_letter = request.form.get('future_letter', '').strip()
         theme = request.form.get('theme', 'default')
         privacy_level = request.form.get('privacy_level', 'friends')
         owner_pin = request.form.get('owner_pin', '').strip()
@@ -531,14 +531,16 @@ def create_capsule():
         key = generate_key(birthdate, passphrase)
 
         # Sanitize user-provided letter, preserving simple formatting
-        future_letter_sanitized = bleach.clean(
-            future_letter.replace('\n', '<br>'),
-            tags=['br', 'b', 'strong', 'i', 'em', 'u', 'a'],
-            attributes={'a': ['href', 'title', 'rel', 'target']},
-            strip=True,
-        )
-        # Ensure links open safely by default
-        future_letter_sanitized = future_letter_sanitized.replace('<a ', "<a rel=\"noopener noreferrer\" target=\"_blank\" ")
+        future_letter_sanitized = ''
+        if future_letter:
+            future_letter_sanitized = bleach.clean(
+                future_letter.replace('\n', '<br>'),
+                tags=['br', 'b', 'strong', 'i', 'em', 'u', 'a'],
+                attributes={'a': ['href', 'title', 'rel', 'target']},
+                strip=True,
+            )
+            # Ensure links open safely by default
+            future_letter_sanitized = future_letter_sanitized.replace('<a ', "<a rel=\"noopener noreferrer\" target=\"_blank\" ")
 
         capsule_data = {
             'future_letter': future_letter_sanitized,
