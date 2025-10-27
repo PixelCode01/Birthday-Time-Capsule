@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Happy birthday {{ capsule[1].upper() }}{% endblock %}
+{% block title %}Happy Birthday {{ capsule[1] }}!{% endblock %}
 
 {% block content %}
 <div class="fireworks" id="fireworks"></div>
 <div class="confetti-container" id="confettiContainer"></div>
 
-<div class="row justify-content-center unlock-animation">
+<div class="row justify-content-center">
     <div class="col-lg-11">
         <div class="card border-0">
             <div class="card-header border-0 text-center py-5">
                 <div class="birthday-header">
-                    <h1 class="display-3 mb-3">
-                        <i class="fas fa-birthday-cake me-3" style="color: var(--color-primary);"></i>
-                        HAPPY BIRTHDAY {{ capsule[1].upper() }}!
-                        <i class="fas fa-gift ms-3" style="color: var(--color-accent);"></i>
+                    <h1 class="display-4 mb-3">
+                        <i class="fas fa-gift me-3" style="color: var(--color-primary);"></i>
+                        Happy Birthday, {{ capsule[1] }}!
+                        <i class="fas fa-birthday-cake ms-3" style="color: var(--color-danger);"></i>
                     </h1>
-                    <p class="fs-4 mb-0" style="color: var(--color-muted);">Your magical time capsule has been unlocked!</p>
+                    <p class="fs-4 mb-0" style="color: var(--color-muted);">Your time capsule has been unlocked</p>
                     <div class="birthday-date mt-3">
-                        <span class="badge bg-light text-dark fs-5 px-4 py-2" style="background: var(--color-surface-2) !important; color: var(--color-text) !important;">
+                        <span class="badge bg-light text-dark fs-5 px-4 py-2" style="background: var(--color-surface-2); color: var(--color-text);">
                             <i class="fas fa-calendar-alt me-2"></i>{{ capsule[3] }}
                         </span>
                     </div>
@@ -28,33 +28,33 @@
         
         <!-- Future Self Letter -->
         {% if capsule_data.future_letter %}
-        <div class="card message-card mt-4 unlock-animation" style="animation-delay: 0.3s;">
+        <div class="card message-card mt-4">
             <div class="card-header">
-                <h3><i class="fas fa-envelope-open me-2"></i>Letter from Past You</h3>
-                <p class="mb-0">Written when you created this capsule on {{ capsule[5][:10] }}</p>
+                <h3><i class="fas fa-envelope-open me-2"></i>Letter from Your Past Self</h3>
+                <p class="mb-0">Written when you created this capsule</p>
             </div>
             <div class="card-body">
-                <div class="letter-content p-4" style="background: var(--color-surface); border-radius: 12px; font-size: 1.1rem; line-height: 1.8;">
+                <div class="letter-content p-4" style="background: var(--color-surface-2); border-radius: var(--radius-md);">
                     {{ capsule_data.future_letter | safe }}
                 </div>
                 <div class="letter-signature mt-3 text-end">
-                    <em>With love from your past self.</em>
+                    <em style="color: var(--color-muted);">- From {{ capsule[5][:10] }}</em>
                 </div>
             </div>
         </div>
         {% endif %}
         
         <!-- Birthday Messages Section -->
-        <div class="card mt-4 unlock-animation" style="animation-delay: 0.6s;">
+        <div class="card mt-4">
             <div class="card-header">
-                <h3><i class="fas fa-heart me-2"></i>Birthday Messages from Friends & Family</h3>
+                <h3><i class="fas fa-heart me-2"></i>Birthday Messages</h3>
                 <p class="mb-0">{{ contributions|length }} people shared their love for you</p>
             </div>
             <div class="card-body p-4">
                 {% if contributions %}
                     <div class="messages-grid">
                         {% for contribution in contributions %}
-                        <div class="contribution-card unlock-animation" style="animation-delay: {{ 0.9 + (loop.index * 0.2) }}s;">
+                        <div class="contribution-card">
                             <div class="contributor-header">
                                 <div class="contributor-avatar">
                                     <i class="fas fa-user-circle"></i>
@@ -63,7 +63,7 @@
                                     <h5>{{ contribution[2] }}</h5>
                                     <small class="text-muted">{{ contribution[7] }}</small>
                                 </div>
-                                <div class="contribution-type">
+                                <div class="contribution-type ms-auto">
                                     {% if contribution[8] == 'memory' %}
                                         <span class="badge bg-warning">Memory</span>
                                     {% elif contribution[8] == 'wish' %}
@@ -119,29 +119,29 @@
         <!-- Birthday Extras -->
     <div class="row mt-4">
             <div class="col-lg-4 mb-4">
-        <div class="card h-100 unlock-animation border-0" style="animation-delay: 1.2s;">
+        <div class="card h-100 border-0">
             <div class="card-body text-center p-4">
-            <i class="fas fa-crystal-ball fs-1 mb-3" style="color: var(--color-accent);"></i>
-                        <h5>Your birthday horoscope</h5>
-                        <p class="mb-0">{{ birthday_extras.horoscope }}</p>
+            <i class="fas fa-crystal-ball fs-1 mb-3" style="color: var(--color-primary);"></i>
+                        <h5>Your Birthday Horoscope</h5>
+                        <p class="mb-0" style="color: var(--color-muted);">{{ birthday_extras.horoscope }}</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">
-        <div class="card h-100 unlock-animation border-0" style="animation-delay: 1.4s;">
+        <div class="card h-100 border-0">
                     <div class="card-body text-center p-4">
-            <i class="fas fa-dice fs-1 mb-3" style="color: var(--color-primary);"></i>
-                        <h5>Your lucky number</h5>
+            <i class="fas fa-dice fs-1 mb-3" style="color: var(--color-success);"></i>
+                        <h5>Your Lucky Number</h5>
                         <div class="lucky-number">{{ birthday_extras.lucky_number }}</div>
-                        <p class="mb-0 small">Keep this number close to your heart!</p>
+                        <p class="mb-0 small" style="color: var(--color-muted);">Keep this number close!</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">
-        <div class="card h-100 unlock-animation border-0" style="animation-delay: 1.6s;">
+        <div class="card h-100 border-0">
             <div class="card-body text-center p-4">
-            <i class="fas fa-music fs-1 mb-3" style="color: var(--color-primary);"></i>
-                        <h5>Birthday playlist</h5>
+            <i class="fas fa-music fs-1 mb-3" style="color: var(--color-warning);"></i>
+                        <h5>Birthday Playlist</h5>
                         <div class="playlist">
                             {% for song in birthday_extras.playlist %}
                                 <div class="song-item">{{ song }}</div>
@@ -153,19 +153,12 @@
         </div>
         
     <!-- Grand Finale -->
-        <div class="card mt-4 unlock-animation border-0" style="animation-delay: 1.8s;">
+        <div class="card mt-4 border-0">
             <div class="card-body text-center py-5">
-                <div class="ascii-art birthday-finale">
-    #############################################
-    #                                           #
-    #        HAPPY BIRTHDAY, {{ capsule[1].upper() }}        #
-    #                                           #
-    #############################################
-                </div>
-                <h3 class="mt-4" style="color: var(--color-text);">May this birthday be the beginning of your most amazing year yet!</h3>
-                <p class="fs-5" style="color: var(--color-muted);">Thank you for taking this journey through time. We hope this brought some joy to your day.</p>
+                <h3 class="mt-3 mb-4" style="color: var(--color-text);">May this birthday mark the beginning of your best year yet!</h3>
+                <p class="fs-5 mb-4" style="color: var(--color-muted);">Thank you for taking this journey through time.</p>
                 <div class="mt-3">
-                    <button class="btn btn-outline-secondary" onclick="window.print()"><i class="fas fa-print me-2"></i>Print / Save PDF</button>
+                    <button class="btn btn-outline-secondary" onclick="window.print()"><i class="fas fa-print me-2"></i>Save as PDF</button>
                 </div>
             </div>
         </div>
@@ -173,87 +166,75 @@
 </div>
 
 <style>
-    .birthday-header {
-        animation: glow 2s ease-in-out infinite alternate;
+    .birthday-header h1 {
+        animation: fadeIn 1s ease-out;
     }
     
-    @keyframes glow {
+    @keyframes fadeIn {
         from {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transform: translateY(-10px);
         }
         to {
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
+            opacity: 1;
+            transform: translateY(0);
         }
     }
     
     .messages-grid {
         display: grid;
-        gap: 25px;
+        gap: 1.5rem;
     }
     
     .contribution-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
-        border-radius: 20px;
-        padding: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(102, 126, 234, 0.1);
+        background: var(--color-surface);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border: 1px solid var(--color-border);
     }
     
     .contribution-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-md);
     }
     
     .contributor-header {
         display: flex;
         align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
+        gap: 1rem;
+        margin-bottom: 1rem;
     }
     
     .contributor-avatar i {
-        font-size: 3rem;
-        color: #667eea;
+        font-size: 2.5rem;
+        color: var(--color-primary);
     }
     
     .contributor-info h5 {
         margin: 0;
-        color: #333;
+        color: var(--color-text);
         font-weight: 600;
     }
     
     .message-bubble {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, var(--color-primary), #4752c4);
         color: white;
-        padding: 20px;
-        border-radius: 20px;
-        position: relative;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .message-bubble::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: 30px;
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-bottom: 10px solid #667eea;
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
     }
     
     .ascii-showcase {
-        background: rgba(248, 249, 250, 0.8);
-        padding: 20px;
-        border-radius: 15px;
-        border-left: 5px solid #667eea;
+        background: var(--color-surface-2);
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--color-primary);
     }
     
     .ascii-showcase h6 {
-        color: #667eea;
-        margin-bottom: 15px;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
     }
     
     .image-showcase {
@@ -261,50 +242,35 @@
     }
     
     .image-showcase h6 {
-        color: #667eea;
-        margin-bottom: 15px;
-    }
-    
-    .image-container {
-        position: relative;
-        display: inline-block;
+        color: var(--color-primary);
+        margin-bottom: 1rem;
     }
     
     .image-container img {
         max-width: 100%;
         max-height: 300px;
         object-fit: cover;
-        border-radius: 15px;
-        transition: transform 0.3s ease;
+        border-radius: var(--radius-md);
+        transition: var(--transition);
     }
     
     .image-container:hover img {
-        transform: scale(1.05);
+        box-shadow: var(--shadow-lg);
     }
     
     .lucky-number {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: bold;
-        color: #667eea;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        margin: 10px 0;
+        color: var(--color-primary);
+        margin: 0.5rem 0;
     }
     
     .playlist .song-item {
-        background: rgba(255, 255, 255, 0.2);
-        margin: 5px 0;
-        padding: 8px 15px;
-        border-radius: 20px;
+        background: var(--color-surface-2);
+        margin: 0.5rem 0;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
         font-size: 0.9rem;
-    }
-    
-    .birthday-finale {
-        font-size: 0.8rem;
-        line-height: 1.2;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 20px;
-        border-radius: 15px;
-        display: inline-block;
     }
     
     .confetti-container {
@@ -322,58 +288,38 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        animation: confetti-fall 4s linear infinite;
+        animation: confetti-fall 4s linear;
     }
     
     @keyframes confetti-fall {
         0% {
-            transform: translateY(-100vh) rotateZ(0deg);
+            transform: translateY(-10vh) rotateZ(0deg);
             opacity: 1;
         }
         100% {
-            transform: translateY(100vh) rotateZ(720deg);
+            transform: translateY(100vh) rotateZ(360deg);
             opacity: 0;
         }
     }
     
     .letter-content {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .letter-content::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-        0% {
-            transform: rotate(45deg) translateX(-100%);
-        }
-        100% {
-            transform: rotate(45deg) translateX(100%);
-        }
+        font-size: 1.1rem;
+        line-height: 1.8;
     }
 </style>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Enhanced fireworks system
+// Subtle celebration effects
 function createFirework() {
-    const colors = ['#ff6b6b', '#4facfe', '#667eea', '#f093fb', '#ffeaa7', '#00f2fe'];
+    const colors = ['#ff6b6b', '#4facfe', '#5865f2', '#22c55e', '#f59e0b'];
     const firework = document.createElement('div');
     firework.className = 'firework';
     firework.style.left = Math.random() * 100 + '%';
-    firework.style.top = Math.random() * 80 + '%';
+    firework.style.top = Math.random() * 60 + '%';
     firework.style.background = colors[Math.floor(Math.random() * colors.length)];
-    firework.style.animationDuration = (Math.random() * 2 + 1) + 's';
+    firework.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
     
     document.getElementById('fireworks').appendChild(firework);
     
@@ -381,36 +327,21 @@ function createFirework() {
         if (firework.parentNode) {
             firework.parentNode.removeChild(firework);
         }
-    }, 3000);
+    }, 2500);
 }
 
-// Enhanced confetti system
+// Tasteful confetti
 function createConfetti() {
-    const colors = ['#ff6b6b', '#4facfe', '#667eea', '#f093fb', '#ffeaa7', '#00f2fe', '#fa709a', '#fee140'];
-    const shapes = ['circle', 'square', 'triangle'];
+    const colors = ['#ff6b6b', '#4facfe', '#5865f2', '#22c55e', '#f59e0b'];
     
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 30; i++) {
         setTimeout(() => {
             const confetti = document.createElement('div');
             confetti.className = 'confetti-piece';
             confetti.style.left = Math.random() * 100 + '%';
             confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDelay = Math.random() * 2 + 's';
-            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            
-            // Random shapes
-            const shape = shapes[Math.floor(Math.random() * shapes.length)];
-            if (shape === 'square') {
-                confetti.style.borderRadius = '0';
-            } else if (shape === 'triangle') {
-                confetti.style.borderRadius = '0';
-                confetti.style.width = '0';
-                confetti.style.height = '0';
-                confetti.style.borderLeft = '4px solid transparent';
-                confetti.style.borderRight = '4px solid transparent';
-                confetti.style.borderBottom = '8px solid ' + colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.background = 'transparent';
-            }
+            confetti.style.animationDelay = Math.random() * 1 + 's';
+            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
             
             document.getElementById('confettiContainer').appendChild(confetti);
             
@@ -419,94 +350,40 @@ function createConfetti() {
                     confetti.parentNode.removeChild(confetti);
                 }
             }, 6000);
-        }, i * 50);
-    }
-}
-
-// Scroll-triggered animations
-function observeRevealElements() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('.contribution-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(50px)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(el);
-    });
-}
-
-// Sound effects (if supported)
-function playBirthdaySound() {
-    try {
-        const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DvuGUdAUCM1/PVfy0EI');
-        audio.volume = 0.1;
-        audio.play();
-    } catch (e) {
-        // Sound not supported, continue silently
+        }, i * 100);
     }
 }
 
 // Initialize celebrations
 document.addEventListener('DOMContentLoaded', function() {
-    // Start fireworks immediately
-    setInterval(createFirework, 800);
+    // Start limited fireworks
+    let fireworkCount = 0;
+    const fireworkInterval = setInterval(() => {
+        if (fireworkCount < 15) {
+            createFirework();
+            fireworkCount++;
+        } else {
+            clearInterval(fireworkInterval);
+        }
+    }, 1200);
     
-    // Start confetti
+    // One round of confetti
     createConfetti();
     
-    // Repeat confetti every 10 seconds
-    setInterval(createConfetti, 10000);
-    
-    // Initialize scroll animations
-    setTimeout(observeRevealElements, 1000);
-    
-    // Play birthday sound
-    setTimeout(playBirthdaySound, 2000);
-    
-    // Add sparkle effects to cards
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.3)';
-        });
-        card.addEventListener('mouseleave', function() {
-            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
-        });
+    // Add smooth reveal animations
+    document.querySelectorAll('.card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 200);
     });
     
-    // Add celebration message to console
-        console.log(`
-====================================
-    HAPPY BIRTHDAY {{ capsule[1].upper() }}!
-    Your time capsule has been unlocked.
-    Wishing you a great year ahead.
-====================================
-        `);
+    // Celebration message to console
+    console.log('%cHappy Birthday! 🎉', 'font-size: 2rem; color: #5865f2; font-weight: bold;');
+    console.log('%cYour time capsule has been unlocked.', 'font-size: 1.2rem; color: #22c55e;');
 });
-
-// Auto-scroll to show content progressively
-let scrollIndex = 0;
-const scrollTargets = ['.card'];
-
-function autoScroll() {
-    if (scrollIndex < scrollTargets.length) {
-        const target = document.querySelector(scrollTargets[scrollIndex]);
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            scrollIndex++;
-        }
-    }
-}
-
-// Start auto-scroll after initial animations
-setTimeout(() => {
-    setInterval(autoScroll, 8000);
-}, 5000);
 </script>
 {% endblock %}

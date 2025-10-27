@@ -7,8 +7,8 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
-                <h2><i class="fas fa-magic me-2"></i>Create Your Birthday Time Capsule</h2>
-                <p class="mb-0">Design a magical birthday surprise for the future</p>
+                <h2><i class="fas fa-gift me-2"></i>Create Your Birthday Time Capsule</h2>
+                <p class="mb-0">Set up a special birthday surprise for the future</p>
             </div>
             <div class="card-body p-4">
                 <form method="POST" id="createCapsuleForm">
@@ -122,48 +122,48 @@
                         </div>
                     </div>
                     
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="future_letter" class="form-label">
-                            <i class="fas fa-envelope me-1"></i>Letter to Future Self
+                            <i class="fas fa-envelope me-1"></i>Letter to Your Future Self (Optional)
                         </label>
                         <textarea class="form-control" id="future_letter" name="future_letter" rows="5" 
-                                  placeholder="Write a heartfelt message to yourself that will be revealed when the capsule opens...&#10;&#10;What are your dreams today? What do you hope to achieve by then? What would you like to remember about this moment?"></textarea>
+                                  placeholder="Write a message to yourself that will be revealed when the capsule opens...&#10;&#10;What are your dreams today? What do you hope to achieve?"></textarea>
                         <div class="form-text">
-                            <i class="fas fa-heart me-1"></i>This special message will be the first thing you see when the capsule opens
+                            <i class="fas fa-info-circle me-1"></i>This message will be the first thing you see when the capsule unlocks
                         </div>
                     </div>
                     
-                    <div class="milestone-preview mb-4" id="milestonePreview" style="display: none;">
-                        <div class="glass-morphism p-3 text-white text-center">
-                            <h5><i class="fas fa-birthday-cake me-2"></i>Milestone Preview</h5>
+                    <div class="mb-4" id="milestonePreview" style="display: none;">
+                        <div class="glass-morphism p-3 text-center" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                            <h6><i class="fas fa-info-circle me-2"></i>Milestone Preview</h6>
                             <p class="mb-1">This capsule will unlock on your <strong id="milestoneAge"></strong> birthday!</p>
-                            <p class="mb-0 small" id="timeUntilUnlock"></p>
+                            <p class="mb-0 small text-muted" id="timeUntilUnlock"></p>
                         </div>
                     </div>
                     
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg px-5">
-                            <i class="fas fa-rocket me-2"></i>Create Time Capsule
+                            <i class="fas fa-plus me-2"></i>Create Time Capsule
                         </button>
                     </div>
                 </form>
                 
                 <!-- Tips Section -->
-                <div class="mt-5 p-4" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border-radius: 15px;">
+                <div class="mt-5 p-4" style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
                     <h5><i class="fas fa-lightbulb me-2"></i>Tips for a Great Time Capsule</h5>
                     <div class="row">
                         <div class="col-md-6">
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-3">
                                 <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Choose a meaningful milestone birthday</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Write from the heart in your future letter</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Share the ID with close friends and family</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Write from the heart in your letter</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Share the link with close friends</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-3">
                                 <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use a passphrase you'll remember</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Consider what themes you'll love in the future</li>
-                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Remember to mark your calendar!</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Set a reminder for the unlock date</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Invite friends to contribute</li>
                             </ul>
                         </div>
                     </div>

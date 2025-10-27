@@ -5,48 +5,48 @@
     <div class="col-lg-10">
         <div class="card">
             <div class="card-header">
-                <h1><i class="fas fa-magic me-3"></i>Welcome to Birthday Time Capsule</h1>
-                <p class="mb-0 fs-5">Create magical birthday surprises that unlock in the future</p>
+                <h1><i class="fas fa-gift me-2"></i>Welcome to Birthday Time Capsule</h1>
+                <p class="mb-0 fs-5">Create heartfelt birthday surprises that unlock in the future</p>
             </div>
             <div class="card-body p-4">
                 <!-- Stats Section -->
                 <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="glass-morphism text-center p-3">
-                            <i class="fas fa-birthday-cake fs-1" style="color: var(--color-primary);"></i>
+                    <div class="col-md-6 mb-3">
+                        <div class="glass-morphism text-center p-4">
+                            <i class="fas fa-birthday-cake fs-1 mb-3" style="color: var(--color-primary);"></i>
                             <h3 style="color: var(--color-text);">{{ total_capsules }}</h3>
                             <p class="mb-0" style="color: var(--color-muted);">Time Capsules Created</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="glass-morphism text-center p-3">
-                            <i class="fas fa-heart fs-1" style="color: var(--color-danger);"></i>
+                    <div class="col-md-6 mb-3">
+                        <div class="glass-morphism text-center p-4">
+                            <i class="fas fa-heart fs-1 mb-3" style="color: var(--color-danger);"></i>
                             <h3 style="color: var(--color-text);">{{ total_contributions }}</h3>
-                            <p class="mb-0" style="color: var(--color-muted);">Wishes Collected</p>
+                            <p class="mb-0" style="color: var(--color-muted);">Birthday Messages Shared</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Action Cards -->
-                <div class="row mb-5">
+                <div class="row mb-4">
                     <div class="col-lg-6 mb-4">
-                        <div class="card h-100 border-0" style="transform: perspective(1000px) rotateY(-3deg);">
+                        <div class="card h-100 border-0">
                             <div class="card-body text-center p-4">
                                 <i class="fas fa-plus-circle fs-1 text-primary mb-3"></i>
                                 <h4 class="mb-3">Create New Capsule</h4>
-                                <p class="mb-4">Start a magical journey by creating a birthday time capsule. Set a future date and watch the magic unfold!</p>
+                                <p class="mb-4">Start collecting birthday memories! Create a time capsule and invite friends to add messages.</p>
                                 <a href="{{ url_for('create_capsule') }}" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-rocket me-2"></i>Create Capsule
+                                    <i class="fas fa-plus me-2"></i>Create Capsule
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 mb-4">
-            <div class="card h-100 border-0" style="transform: perspective(1000px) rotateY(3deg);">
+            <div class="card h-100 border-0">
                             <div class="card-body text-center p-4">
-                <i class="fas fa-search fs-1 mb-3" style="color: var(--color-accent);"></i>
-                                <h4 class="mb-3">Find Existing Capsule</h4>
-                                <p class="mb-4">Join the celebration! Find an existing capsule to add your birthday wishes and memories.</p>
+                <i class="fas fa-search fs-1 text-warning mb-3"></i>
+                                <h4 class="mb-3">Find a Capsule</h4>
+                                <p class="mb-4">Have a capsule ID or link? Search here to add your birthday wishes!</p>
                 <a href="{{ url_for('find_capsule') }}" class="btn btn-warning btn-lg">
                                     <i class="fas fa-search me-2"></i>Find Capsule
                                 </a>
@@ -57,17 +57,17 @@
                 
                 <!-- How It Works -->
                 <div class="mt-5">
-                    <h2 class="text-center mb-5">
-                        <i class="fas fa-cogs me-2"></i>How It Works
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-question-circle me-2"></i>How It Works
                     </h2>
                     <div class="row">
                         <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card text-center h-100 border-0">
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">1</div>
-                    <i class="fas fa-edit fs-1 mb-3" style="color: var(--color-primary);"></i>
-                                    <h5>Create</h5>
-                                    <p class="mb-0">Set up your time capsule with a future unlock date and write a letter to your future self</p>
+                    <i class="fas fa-edit fs-2 mb-3" style="color: var(--color-primary);"></i>
+                                    <h5>Create Your Capsule</h5>
+                                    <p class="mb-0">Set a future birthday date and write a letter to your future self</p>
                                 </div>
                             </div>
                         </div>
@@ -75,9 +75,9 @@
                 <div class="card text-center h-100 border-0">
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">2</div>
-                    <i class="fas fa-users fs-1 mb-3" style="color: var(--color-accent);"></i>
-                                    <h5>Share</h5>
-                                    <p class="mb-0">Share your capsule ID with friends and family so they can add their birthday wishes</p>
+                    <i class="fas fa-share-alt fs-2 mb-3" style="color: var(--color-success);"></i>
+                                    <h5>Share with Friends</h5>
+                                    <p class="mb-0">Share your capsule link with friends and family</p>
                                 </div>
                             </div>
                         </div>
@@ -85,9 +85,9 @@
                 <div class="card text-center h-100 border-0">
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">3</div>
-                    <i class="fas fa-envelope-open fs-1 mb-3" style="color: var(--color-primary);"></i>
-                                    <h5>Collect</h5>
-                                    <p class="mb-0">Friends add heartfelt messages, ASCII art doodles, and special images to your capsule</p>
+                    <i class="fas fa-comments fs-2 mb-3" style="color: var(--color-warning);"></i>
+                                    <h5>Collect Messages</h5>
+                                    <p class="mb-0">Friends add messages, photos, and ASCII art</p>
                                 </div>
                             </div>
                         </div>
@@ -95,9 +95,9 @@
                 <div class="card text-center h-100 border-0">
                                 <div class="card-body p-4">
                                     <div class="step-number mb-3">4</div>
-                    <i class="fas fa-gift fs-1 mb-3" style="color: var(--color-warning);"></i>
-                                    <h5>Reveal</h5>
-                                    <p class="mb-0">On your special day, unlock the capsule to reveal all the birthday surprises!</p>
+                    <i class="fas fa-gift fs-2 mb-3" style="color: var(--color-danger);"></i>
+                                    <h5>Unlock & Celebrate</h5>
+                                    <p class="mb-0">On the special day, unlock and enjoy all the wishes</p>
                                 </div>
                             </div>
                         </div>
@@ -106,29 +106,29 @@
                 
                 <!-- Features Section -->
                 <div class="mt-5">
-                    <h2 class="text-center mb-5">
-                        <i class="fas fa-star me-2"></i>Amazing Features
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-star me-2"></i>Key Features
                     </h2>
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <div class="feature-item text-center p-3">
-                                <i class="fas fa-lock fs-2 text-primary mb-2"></i>
-                                <h6>Secure Encryption</h6>
-                                <p class="mb-0 small">Military-grade encryption keeps your messages safe until the unlock date</p>
+                            <div class="feature-item text-center p-4">
+                                <i class="fas fa-lock fs-2 text-primary mb-3"></i>
+                                <h6 class="mb-2">Secure & Private</h6>
+                                <p class="mb-0 small">Your messages are encrypted and stay locked until the unlock date</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="feature-item text-center p-3">
-                                <i class="fas fa-calendar-alt fs-2 text-success mb-2"></i>
-                                <h6>Date-Locked</h6>
-                                <p class="mb-0 small">Capsules automatically unlock on milestone birthdays for maximum surprise</p>
+                            <div class="feature-item text-center p-4">
+                                <i class="fas fa-calendar-check fs-2 text-success mb-3"></i>
+                                <h6 class="mb-2">Date-Locked</h6>
+                                <p class="mb-0 small">Set any future birthday date - the capsule unlocks automatically</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="feature-item text-center p-3">
-                                <i class="fas fa-images fs-2 text-warning mb-2"></i>
-                                <h6>Rich Media</h6>
-                                <p class="mb-0 small">Add text, ASCII art, and images to create unforgettable birthday experiences</p>
+                            <div class="feature-item text-center p-4">
+                                <i class="fas fa-image fs-2 text-warning mb-3"></i>
+                                <h6 class="mb-2">Photos & More</h6>
+                                <p class="mb-0 small">Add text, ASCII art, and photos to make it memorable</p>
                             </div>
                         </div>
                     </div>
@@ -141,26 +141,26 @@
 <style>
     .step-number {
         display: inline-block;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
+        width: 3rem;
+        height: 3rem;
+        line-height: 3rem;
         border-radius: 50%;
-        background: var(--color-surface-2);
-        color: var(--color-text);
-        font-weight: bold;
-        font-size: 1.2rem;
+        background: var(--color-primary);
+        color: var(--color-primary-contrast);
+        font-weight: 600;
+        font-size: 1.25rem;
     }
     
     .feature-item {
         background: var(--color-surface-2);
         border: 1px solid var(--color-border);
-        border-radius: 15px;
-        transition: all 0.3s ease;
+        border-radius: var(--radius-md);
+        transition: var(--transition);
+        height: 100%;
     }
     
     .feature-item:hover {
-        background: var(--color-surface);
-        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
     }
 </style>
 {% endblock %}

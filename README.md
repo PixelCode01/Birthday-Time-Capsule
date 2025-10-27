@@ -12,7 +12,6 @@ https://pixel02.pythonanywhere.com/
 - Share a link or QR so friends can contribute
 - Messages stay sealed (encrypted) until unlock
 - Optional owner/access PINs and a simple owner view
-- Uses a local SQLite database (`time_capsule.db`)
 
 ## How to use
 

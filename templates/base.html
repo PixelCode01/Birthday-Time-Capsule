@@ -11,45 +11,44 @@
     <style>
         :root {
             /* Base palette (light) */
-            --color-bg: #f7f7fb;
+            --color-bg: #f8f9fa;
             --color-surface: #ffffff;
-            --color-surface-2: #f3f4f6;
-            --color-text: #111827;
-            --color-muted: #6b7280;
-            --color-border: #e5e7eb;
+            --color-surface-2: #f1f3f5;
+            --color-text: #212529;
+            --color-muted: #6c757d;
+            --color-border: #dee2e6;
 
-            --color-primary: #6366f1; /* indigo-500 */
-            --color-primary-600: #4f46e5;
-            --color-primary-700: #4338ca;
+            --color-primary: #5865f2;
+            --color-primary-hover: #4752c4;
             --color-primary-contrast: #ffffff;
 
-            --color-accent: #14b8a6; /* teal-500 */
+            --color-accent: #10b981;
             --color-success: #22c55e;
             --color-warning: #f59e0b;
             --color-danger: #ef4444;
 
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+            --transition: all 0.2s ease;
 
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 24px rgba(0,0,0,0.12);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
         }
 
         /* Dark theme overrides */
         [data-theme="dark"] {
-            --color-bg: #0f172a; /* slate-900 */
-            --color-surface: #111827; /* gray-900 */
-            --color-surface-2: #1f2937; /* gray-800 */
-            --color-text: #e5e7eb; /* gray-200 */
-            --color-muted: #9ca3af; /* gray-400 */
-            --color-border: #334155; /* slate-700 */
+            --color-bg: #1a1d24;
+            --color-surface: #242831;
+            --color-surface-2: #2d3139;
+            --color-text: #e9ecef;
+            --color-muted: #adb5bd;
+            --color-border: #3d4451;
 
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
-            --shadow-md: 0 6px 16px rgba(0,0,0,0.45);
-            --shadow-lg: 0 14px 32px rgba(0,0,0,0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.3);
         }
         
         * {
@@ -103,27 +102,26 @@
         }
         
         .card {
-            background: var(--color-surface) !important; /* override any inline gradients */
-            color: var(--color-text) !important;
+            background: var(--color-surface);
+            color: var(--color-text);
             border: 1px solid var(--color-border);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm);
             transition: var(--transition);
             overflow: hidden;
         }
         
         .card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
         
         .card-header {
-            background: linear-gradient(180deg, var(--color-surface), var(--color-surface-2)) !important;
-            color: var(--color-text) !important;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+            background: var(--color-surface);
+            color: var(--color-text);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             text-align: center;
-            padding: 24px 20px;
-            border-bottom: 1px solid var(--color-border) !important;
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--color-border);
         }
         
         .card-header h1, .card-header h2 {
@@ -149,8 +147,7 @@
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            background: var(--color-primary-600);
+            background: var(--color-primary-hover);
             color: var(--color-primary-contrast);
             box-shadow: var(--shadow-md);
         }
@@ -161,20 +158,20 @@
         }
         
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            background: #16a34a;
             color: white;
+            box-shadow: var(--shadow-md);
         }
         
         .btn-warning {
             background: var(--color-warning);
-            color: #3b2c02;
+            color: #78350f;
         }
         
         .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
-            color: #333;
+            background: #d97706;
+            color: #451a03;
+            box-shadow: var(--shadow-md);
         }
         
         .form-control, .form-select {
@@ -198,28 +195,29 @@
         }
         
         .navbar {
-            background: var(--color-surface) !important;
+            background: var(--color-surface);
             border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
         }
         /* Ensure navbar text/icons are readable in both themes */
         .navbar .navbar-brand,
         .navbar .nav-link {
-            color: var(--color-text) !important;
+            color: var(--color-text);
         }
         .navbar .nav-link:hover,
         .navbar .nav-link:focus {
-            color: var(--color-primary) !important;
+            color: var(--color-primary);
         }
         .navbar .navbar-toggler {
             border-color: var(--color-border);
         }
         /* Default (light) toggler icon */
         .navbar .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 37, 41, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         /* Dark theme toggler icon for contrast */
         [data-theme="dark"] .navbar .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(229, 231, 235, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(233, 236, 239, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
         
         .navbar-brand {
@@ -316,33 +314,29 @@
         .message-card {
             background: var(--color-surface);
             border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 15px 0;
+            padding: 1.25rem;
+            margin: 1rem 0;
             border: 1px solid var(--color-border);
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
         }
         
         .message-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-md);
         }
         
         .unlock-animation {
-            animation: unlock 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.6s ease-out;
         }
         
-        @keyframes unlock {
-            0% {
-                transform: scale(0.8) rotateY(180deg);
+        @keyframes fadeIn {
+            from {
                 opacity: 0;
+                transform: translateY(20px);
             }
-            50% {
-                transform: scale(1.05) rotateY(90deg);
-            }
-            100% {
-                transform: scale(1) rotateY(0deg);
+            to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
         
@@ -362,23 +356,11 @@
         }
         
         .floating-icons {
-            display: none; /* tamed by default for cleaner UI */
+            display: none;
         }
         
         .floating-icon {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+            display: none;
         }
         
         .countdown-timer {
@@ -408,25 +390,70 @@
         
         @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
             
             .card-header {
-                padding: 20px 15px;
+                padding: 1.5rem 1rem;
+            }
+            
+            .card-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .card-header h2 {
+                font-size: 1.5rem;
             }
             
             .btn {
-                padding: 10px 20px;
-                font-size: 14px;
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
             }
             
             .countdown-item {
                 min-width: 60px;
-                padding: 10px;
+                padding: 0.625rem;
             }
             
             .countdown-number {
                 font-size: 1.5rem;
+            }
+            
+            .step-number {
+                width: 2.5rem;
+                height: 2.5rem;
+                line-height: 2.5rem;
+                font-size: 1rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+
+            .display-4 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-group .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .d-inline-flex.gap-2 {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .d-inline-flex.gap-2 .btn {
+                width: 100%;
             }
         }
         
@@ -434,11 +461,11 @@
     .progress-bar { height: 100%; background: var(--color-primary); border-radius: 10px; transition: width 0.3s ease; }
 
     /* Themed links and muted text */
-    .text-muted { color: var(--color-muted) !important; }
+    .text-muted { color: var(--color-muted); }
     a { color: var(--color-primary); text-decoration: none; }
-    a:hover, a:focus { color: var(--color-primary-600); text-decoration: underline; }
+    a:hover, a:focus { color: var(--color-primary-hover); text-decoration: underline; }
 
-        /* Improve outline button contrast in dark theme */
+        /* Better outline button contrast in dark theme */
         .btn-outline-secondary {
             color: var(--color-text);
             border: 1px solid var(--color-border);
@@ -448,33 +475,33 @@
         .btn-outline-secondary:focus {
             background: var(--color-surface-2);
             color: var(--color-text);
-            border-color: var(--color-border);
+            border-color: var(--color-primary);
         }
     /* Better icon visibility for close buttons in dark */
-    [data-theme="dark"] .btn-close { filter: invert(1) grayscale(100%); opacity: 0.9; }
+    [data-theme="dark"] .btn-close { filter: invert(1) grayscale(100%); opacity: 0.8; }
     [data-theme="dark"] .btn-close:hover { opacity: 1; }
     </style>
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-birthday-cake me-2"></i>Birthday Time Capsule
+            <a class="navbar-brand" href="{{ url_for('index') }}" aria-label="Birthday Time Capsule Home">
+                <i class="fas fa-birthday-cake me-2" aria-hidden="true"></i>Birthday Time Capsule
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ url_for('find_capsule') }}">
-                        <i class="fas fa-search me-1"></i>Find Capsule
+                        <i class="fas fa-search me-1" aria-hidden="true"></i>Find Capsule
                     </a>
                     <a class="nav-link" href="{{ url_for('create_capsule') }}">
-                        <i class="fas fa-plus me-1"></i>Create New
+                        <i class="fas fa-plus me-1" aria-hidden="true"></i>Create New
                     </a>
-                    <button class="btn btn-sm btn-outline-secondary ms-2" id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false">
-                        <i class="fas fa-moon me-1" id="themeIcon"></i><span id="themeLabel">Dark</span>
+                    <button class="btn btn-sm btn-outline-secondary ms-2" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+                        <i class="fas fa-moon me-1" id="themeIcon" aria-hidden="true"></i><span id="themeLabel">Dark</span>
                     </button>
                 </div>
             </div>
@@ -544,53 +571,52 @@
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    if (submitBtn && !submitBtn.disabled) {
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<span class="loading-spinner me-2"></span>Processing...';
-                        
-                        setTimeout(() => {
-                            if (submitBtn) {
-                                submitBtn.disabled = false;
-                                submitBtn.innerHTML = submitBtn.dataset.originalText || 'Submit';
-                            }
-                        }, 5000);
-                    }
-                });
-                
-                // Store original button text
                 const submitBtn = form.querySelector('button[type="submit"]');
                 if (submitBtn) {
                     submitBtn.dataset.originalText = submitBtn.innerHTML;
                 }
+                
+                form.addEventListener('submit', function(e) {
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn && !btn.disabled && !form.hasAttribute('data-no-disable')) {
+                        btn.disabled = true;
+                        const originalText = btn.dataset.originalText || btn.innerHTML;
+                        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
+                        
+                        setTimeout(() => {
+                            if (btn) {
+                                btn.disabled = false;
+                                btn.innerHTML = originalText;
+                            }
+                        }, 10000);
+                    }
+                });
             });
             
-            // Auto-dismiss alerts after 5 seconds
+            // Auto-dismiss alerts after 8 seconds
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(alert => {
                 setTimeout(() => {
                     if (alert && alert.parentNode) {
-                        alert.classList.remove('show');
-                        setTimeout(() => {
-                            if (alert.parentNode) {
-                                alert.parentNode.removeChild(alert);
-                            }
-                        }, 150);
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
                     }
-                }, 5000);
+                }, 8000);
             });
             
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
                     }
                 });
             });
@@ -626,12 +652,13 @@
             });
         }
         
-    // Enhanced animations (tamed)
+    // Enhanced animations (subtle)
         function observeElements() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-            entry.target.style.animation = 'unlock 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
                     }
                 });
             }, { threshold: 0.1 });
